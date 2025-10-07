@@ -27,7 +27,7 @@ export default function ParallaxSection({
   overlay = false,
   overlayOpacity = 0.3,
   grayscale = true,
-  objectFit = 'contain',
+  objectFit = 'cover',
   fillScreen = false,
 }: ParallaxSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null);

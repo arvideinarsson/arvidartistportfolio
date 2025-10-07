@@ -241,9 +241,19 @@ export default function Home() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="flex items-center justify-center" style={{ backgroundColor: '#b0bec5', minHeight: '60vh' }} aria-label="Contact">
-          <Contact />
-        </section>
+        <ParallaxSection
+          imageSrc="/assets/images/Contact/Contact-background.JPG"
+          imageAlt="Contact Background"
+          speed={0.5}
+          className="relative flex items-center justify-center"
+          style={{ minHeight: '60vh' }}
+          overlay={true}
+          grayscale={false}
+        >
+          <div id="contact" className="relative z-10 w-full" aria-label="Contact">
+            <Contact />
+          </div>
+        </ParallaxSection>
       </main>
     </ClickSpark>
   );

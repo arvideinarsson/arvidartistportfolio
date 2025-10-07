@@ -82,11 +82,11 @@ export default function Contact({ className }: ContactProps) {
   ];
 
   return (
-    <div className={cn('text-gray-900 py-20', className)}>
-      <div className="w-full max-w-[90vw] mx-auto px-4">
+    <div className={cn('text-white py-20', className)}>
+      <div className="w-full max-w-4xl mx-auto px-4">
         {/* Heading */}
         <motion.h2
-          className="text-5xl font-bold text-gray-900 mb-12 text-center"
+          className="text-5xl font-bold text-white mb-12 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
