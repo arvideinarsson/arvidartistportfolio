@@ -85,7 +85,7 @@ export default function ParallaxSection({
               alt={imageAlt}
               fill
               className={`object-${objectFit} ${grayscale ? 'grayscale' : ''}`}
-              style={{ objectPosition: '50% 100%' }}
+              style={{ objectPosition: '50% 50%' }}
               sizes="100vw"
               priority
               quality={100}
