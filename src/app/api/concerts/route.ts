@@ -106,6 +106,7 @@ async function fetchConcertImages(concertTitle: string, apiKey: string): Promise
     // Convert to public URLs
     const imageUrls = imageFiles
       .slice(0, 5) // Limit to 5 images per concert
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map((file: any) => {
         // Convert Google Drive file ID to direct image URL
         return `https://drive.google.com/uc?export=view&id=${file.id}`;

@@ -29,7 +29,7 @@ interface NavigationWithConcertsProps extends NavigationProps {
   source: 'google-calendar' | 'cached' | 'fallback';
 }
 
-export default function Navigation({ className, concerts, isLoading, source }: NavigationWithConcertsProps) {
+export default function Navigation({ className, concerts, isLoading }: NavigationWithConcertsProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -74,7 +74,7 @@ export default function Navigation({ className, concerts, isLoading, source }: N
           'flex flex-col transition-all duration-500',
           'gap-3'
         )}>
-          {NAV_ITEMS.map((item, index) => (
+          {NAV_ITEMS.map((item) => (
             <motion.button
               key={item.href}
               onClick={() => handleNavClick(item.href)}

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import TextPressure from './TextPressure';
 
 export default function Hero() {
@@ -41,11 +42,15 @@ export default function Hero() {
           transition: 'transform 0.1s ease-out',
         }}
       >
-        <img
+        <Image
           src="/assets/images/hero/heropage.jpg"
           alt="Arvid Einarsson Hero"
-          className="w-full h-full object-cover"
+          fill
+          className="object-cover"
           style={{ objectPosition: '50% 75%' }}
+          priority
+          quality={100}
+          unoptimized
         />
         {/* Overlay */}
         <div className="absolute inset-0 bg-black opacity-30"></div>

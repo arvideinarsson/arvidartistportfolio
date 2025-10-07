@@ -7,13 +7,10 @@ import Image from 'next/image';
 
 import Hero from '@/components/Hero';
 import Navigation from '@/components/Navigation';
-import CircularGallery from '@/components/CircularGallery';
 import About from '@/components/About';
-import IdolSection from '@/components/IdolSection';
 import Contact from '@/components/Contact';
 import ClickSpark from '@/components/ClickSpark';
 import ParallaxSection from '@/components/ParallaxSection';
-import { CONCERT_IMAGES, ANIMATION_CONFIG } from '@/constants';
 import { useConcerts } from '@/hooks/useConcerts';
 
 interface PastConcert {
@@ -28,7 +25,7 @@ interface PastConcert {
 }
 
 export default function Home() {
-  const { concerts, isLoading, error, source } = useConcerts();
+  const { concerts, isLoading, source } = useConcerts();
   const [pastConcerts, setPastConcerts] = useState<PastConcert[]>([]);
 
   useEffect(() => {
@@ -218,7 +215,7 @@ export default function Home() {
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-4xl font-bold mb-6">I'm Arvid,</h2>
+                <h2 className="text-4xl font-bold mb-6">I&apos;m Arvid,</h2>
                 <p className="text-lg leading-relaxed mb-4">
                   originally from Hässleholm. Growing up, I never had a proper outlet for my energy until I discovered music in my early teenage years. Together with four friends, I formed the boyband 2Friends, and we began performing for increasingly larger audiences across Sweden. I later competed on Idol as a solo artist, advancing to the quarterfinals.
                 </p>
@@ -226,7 +223,7 @@ export default function Home() {
                   My inspiration comes from artists like Timbuktu and Tommy Körberg, whose artistry and storytelling have shaped my approach to music. I recently released a YouTube video highlighting my biggest musical influences.
                 </p>
                 <p className="text-lg leading-relaxed mb-6">
-                  Now I'm taking the next step in my career—relocating to Stockholm to focus entirely on my own music. This is where my journey truly begins.
+                  Now I&apos;m taking the next step in my career—relocating to Stockholm to focus entirely on my own music. This is where my journey truly begins.
                 </p>
                 <motion.a
                   href="https://www.youtube.com/watch?v=PiFNukCY7Pw"

@@ -102,6 +102,7 @@ async function fetchConcertImages(concertTitle: string, apiKey: string): Promise
 
     const imageUrls = imageFiles
       .slice(0, 5)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map((file: any) => {
         return `https://drive.google.com/uc?export=view&id=${file.id}`;
       });

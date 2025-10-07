@@ -2,50 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import Image from 'next/image';
 
 import { ContactProps } from '@/types';
 import { CONTACT_INFO, ANIMATION_CONFIG } from '@/constants';
 import { cn } from '@/utils';
-
-const contactItems = [
-  {
-    type: 'email',
-    label: 'Email:',
-    value: CONTACT_INFO.email,
-    href: `mailto:${CONTACT_INFO.email}`,
-  },
-  {
-    type: 'phone',
-    label: 'Phone:',
-    value: CONTACT_INFO.phone,
-    href: `tel:${CONTACT_INFO.phone}`,
-  },
-  {
-    type: 'social',
-    label: 'Facebook:',
-    value: CONTACT_INFO.facebook.handle,
-    href: CONTACT_INFO.facebook.url,
-  },
-  {
-    type: 'social',
-    label: 'Instagram:',
-    value: CONTACT_INFO.instagram.handle,
-    href: CONTACT_INFO.instagram.url,
-  },
-  {
-    type: 'social',
-    label: 'TikTok:',
-    value: CONTACT_INFO.tiktok.handle,
-    href: CONTACT_INFO.tiktok.url,
-  },
-  {
-    type: 'social',
-    label: 'YouTube:',
-    value: CONTACT_INFO.youtube.handle,
-    href: CONTACT_INFO.youtube.url,
-  },
-];
 
 export default function Contact({ className }: ContactProps) {
   const [formData, setFormData] = useState({

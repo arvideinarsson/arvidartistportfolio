@@ -62,7 +62,7 @@ export function useConcerts() {
               console.log('🎵 Using cached concert data');
               return;
             }
-          } catch (e) {
+          } catch {
             console.warn('Invalid cached data, fetching fresh');
             localStorage.removeItem(CACHE_KEY);
           }
@@ -115,7 +115,7 @@ export function useConcerts() {
             setLastUpdated(parsed.lastUpdated);
             setSource('cached');
             console.log('🔄 Using cached data as fallback');
-          } catch (e) {
+          } catch {
             console.error('Failed to load cached data');
           }
         }
@@ -147,7 +147,9 @@ export function useConcerts() {
   // Expose global refresh and cache clear functions for debugging
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (window as any).refreshConcerts = refreshConcerts;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (window as any).clearConcertCache = () => {
         localStorage.removeItem(CACHE_KEY);
         console.log('🗑️ Concert cache cleared');
