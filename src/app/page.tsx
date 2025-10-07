@@ -104,7 +104,7 @@ export default function Home() {
 
         {/* First crowd background */}
         <ParallaxSection
-          imageSrc="/assets/images/backgrounds/crowd-background2.jpg"
+          imageSrc="/assets/images/backgrounds/Crowd-background2.jpg"
           imageAlt="Concert Crowd"
           speed={0.5}
           className="min-h-screen"
@@ -173,7 +173,7 @@ export default function Home() {
 
         {/* Second background image */}
         <ParallaxSection
-          imageSrc="/assets/images/backgrounds/mic-background2.jpg"
+          imageSrc="/assets/images/backgrounds/Mic-background2.jpg"
           imageAlt="Microphone Background"
           speed={0.5}
           className="min-h-screen"
