@@ -245,8 +245,7 @@ export default function Home() {
           imageSrc="/assets/images/Contact/Contact-background.JPG"
           imageAlt="Contact Background"
           speed={0.5}
-          className="relative flex items-center justify-center"
-          style={{ minHeight: '60vh' }}
+          className="relative flex items-center justify-center min-h-[60vh]"
           overlay={true}
           grayscale={false}
         >
