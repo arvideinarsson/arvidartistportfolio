@@ -1,0 +1,2090 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Hide all scrollbars globally */
+* {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+/* Ensure body and html can still scroll */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px; /* Account for fixed navigation */
+}
+
+html, body {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: var(--color-text-primary);
+    font-size: 16px;
+    background-color: var(--color-bg-primary);
+}
+
+/* ===========================================
+   ONE-PAGE SCROLL LAYOUT
+   =========================================== */
+
+/* General section styling for one-page layout */
+main > section {
+    min-height: 100vh;
+    padding: 4rem 0;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* Special handling for hero section */
+main > section#home {
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* Ensure proper spacing between sections */
+main > section:not(#home) {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+}
+
+/* ===========================================
+   12-COLUMN GRID SYSTEM
+   =========================================== */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -0.75rem;
+}
+
+.col {
+    padding: 0 0.75rem;
+    width: 100%;
+}
+
+/* Column widths */
+.col-1 { width: 8.333%; }
+.col-2 { width: 16.666%; }
+.col-3 { width: 25%; }
+.col-4 { width: 33.333%; }
+.col-5 { width: 41.666%; }
+.col-6 { width: 50%; }
+.col-7 { width: 58.333%; }
+.col-8 { width: 66.666%; }
+.col-9 { width: 75%; }
+.col-10 { width: 83.333%; }
+.col-11 { width: 91.666%; }
+.col-12 { width: 100%; }
+
+/* Tablet responsive (≤768px) */
+@media (max-width: 768px) {
+    .col-sm-1 { width: 8.333%; }
+    .col-sm-2 { width: 16.666%; }
+    .col-sm-3 { width: 25%; }
+    .col-sm-4 { width: 33.333%; }
+    .col-sm-5 { width: 41.666%; }
+    .col-sm-6 { width: 50%; }
+    .col-sm-7 { width: 58.333%; }
+    .col-sm-8 { width: 66.666%; }
+    .col-sm-9 { width: 75%; }
+    .col-sm-10 { width: 83.333%; }
+    .col-sm-11 { width: 91.666%; }
+    .col-sm-12 { width: 100%; }
+}
+
+/* Mobile responsive (≤576px) */
+@media (max-width: 576px) {
+    .col-xs-1 { width: 8.333%; }
+    .col-xs-2 { width: 16.666%; }
+    .col-xs-3 { width: 25%; }
+    .col-xs-4 { width: 33.333%; }
+    .col-xs-5 { width: 41.666%; }
+    .col-xs-6 { width: 50%; }
+    .col-xs-7 { width: 58.333%; }
+    .col-xs-8 { width: 66.666%; }
+    .col-xs-9 { width: 75%; }
+    .col-xs-10 { width: 83.333%; }
+    .col-xs-11 { width: 91.666%; }
+    .col-xs-12 { width: 100%; }
+}
+
+/* ===========================================
+   COLOR PALETTE SYSTEM
+   =========================================== */
+
+:root {
+    /* Primary Colors */
+    --color-primary: #0046FF;
+    --color-primary-dark: #001BB7;
+    --color-primary-light: #4D7FFF;
+    --color-primary-lightest: #B3CCFF;
+
+    /* Secondary Colors */
+    --color-secondary: #FF8040;
+    --color-secondary-dark: #E6723A;
+    --color-secondary-light: #FFB380;
+    --color-secondary-lightest: #FFDACC;
+
+    /* Accent Colors */
+    --color-accent-cyan: #27D3F5;
+    --color-accent-cyan-dark: #1FB8D9;
+    --color-accent-cyan-light: #6EE2F7;
+    --color-accent-cyan-lightest: #C7F3FC;
+
+    /* Gradient Colors */
+    --color-gradient-start: #667eea;
+    --color-gradient-end: #764ba2;
+    --color-carousel-gradient-1: #ff6b6b;
+    --color-carousel-gradient-2: #4ecdc4;
+
+    /* Neutral Colors */
+    --color-neutral-900: #333333;
+    --color-neutral-800: #4A4A4A;
+    --color-neutral-700: #666666;
+    --color-neutral-600: #999999;
+    --color-neutral-500: #B3B3B3;
+    --color-neutral-400: #CCCCCC;
+    --color-neutral-300: #E0E0E0;
+    --color-neutral-200: #E9E9E9;
+    --color-neutral-100: #F0F0F0;
+    --color-neutral-50: #F9F9F9;
+    --color-white: #FFFFFF;
+
+    /* Background Colors */
+    --color-bg-primary: #FFFFFF;
+    --color-bg-secondary: #F9F9F9;
+    --color-bg-tertiary: #F8F9FA;
+    --color-bg-dark: rgba(0, 0, 0, 0.8);
+    --color-bg-overlay: rgba(0, 0, 0, 0.3);
+
+    /* Text Colors */
+    --color-text-primary: #333333;
+    --color-text-secondary: #666666;
+    --color-text-tertiary: #999999;
+    --color-text-light: rgba(255, 255, 255, 0.9);
+    --color-text-lighter: rgba(255, 255, 255, 0.8);
+    --color-text-lightest: rgba(255, 255, 255, 0.6);
+    --color-text-white: #FFFFFF;
+
+    /* Border Colors */
+    --color-border-light: #E9ECEF;
+    --color-border-medium: #E0E0E0;
+    --color-border-dark: rgba(255, 255, 255, 0.3);
+
+    /* Shadow Colors */
+    --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow-heavy: 0 15px 50px rgba(0, 0, 0, 0.4);
+    --shadow-primary: 0 4px 12px rgba(0, 70, 255, 0.3);
+    --shadow-secondary: 0 2px 8px rgba(255, 128, 64, 0.3);
+
+    /* Interactive States */
+    --color-hover-overlay: rgba(0, 0, 0, 0.1);
+    --color-focus-ring: #27D3F5;
+    --color-error: #DC3545;
+    --color-warning: #FFC107;
+    --color-success: #28A745;
+}
+
+/* ===========================================
+   TYPOGRAPHY - MAJOR THIRD SCALE (1.25)
+   =========================================== */
+
+.text-xs { font-size: 0.64rem; }
+.text-sm { font-size: 0.8rem; }
+.text-base { font-size: 1rem; }
+.text-lg { font-size: 1.25rem; }
+.text-xl { font-size: 1.563rem; }
+.text-2xl { font-size: 1.953rem; }
+.text-3xl { font-size: 2.441rem; }
+.text-4xl { font-size: 3.052rem; }
+.text-5xl { font-size: 3.815rem; }
+.text-6xl { font-size: 4.768rem; }
+
+/* Heading defaults */
+h1 { 
+    font-size: 3.052rem; 
+    line-height: 1.2; 
+    font-weight: 700;
+}
+
+h2 { 
+    font-size: 2.441rem; 
+    line-height: 1.3; 
+    font-weight: 600;
+}
+
+h3 { 
+    font-size: 1.953rem; 
+    line-height: 1.3; 
+    font-weight: 600;
+}
+
+h4 { 
+    font-size: 1.563rem; 
+    line-height: 1.4; 
+    font-weight: 500;
+}
+
+h5 { 
+    font-size: 1.25rem; 
+    line-height: 1.4; 
+    font-weight: 500;
+}
+
+h6 { 
+    font-size: 1rem; 
+    line-height: 1.5; 
+    font-weight: 500;
+}
+
+/* Special typography classes */
+.lead { 
+    font-size: 1.25rem; 
+    font-weight: 300; 
+    line-height: 1.5;
+}
+
+.small { 
+    font-size: 0.8rem; 
+    line-height: 1.4;
+}
+
+/* Typography scale classes override defaults */
+.text-6xl { 
+    font-size: 4.768rem; 
+    line-height: 1.1; 
+    font-weight: 700;
+}
+
+.text-4xl { 
+    font-size: 3.052rem; 
+    line-height: 1.2; 
+    font-weight: 600;
+}
+
+.text-lg { 
+    font-size: 1.25rem; 
+    line-height: 1.5;
+}
+
+/* ===========================================
+   VERTICAL NAVIGATION
+   =========================================== */
+
+.vertical-nav {
+    position: fixed;
+    left: 2rem;
+    top: 2rem;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    transition: all 0.4s ease;
+}
+
+.vertical-nav.collapsed {
+    gap: 0.5rem;
+}
+
+.nav-item {
+    display: block;
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: lowercase;
+    transition: all 0.3s ease;
+    border-radius: 0;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    min-width: 80px;
+}
+
+.vertical-nav.collapsed .nav-item {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 0;
+    min-width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vertical-nav.collapsed:hover .nav-item {
+    width: auto;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 0;
+}
+
+.vertical-nav.collapsed:hover .nav-work {
+    border-radius: 25px 25px 0 0;
+}
+
+.vertical-nav.collapsed:hover .nav-contact {
+    border-radius: 0 0 25px 25px;
+}
+
+.nav-work {
+    background: #333;
+    border-radius: 25px 25px 0 0;
+}
+
+.nav-concerts {
+    background: #0046FF;
+}
+
+.nav-about {
+    background: #FF8040;
+}
+
+.nav-contact {
+    background: #E9E9E9;
+    color: #333;
+    border-radius: 0 0 25px 25px;
+}
+
+.nav-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile Navigation */
+@media (max-width: 768px) {
+    .vertical-nav {
+        left: 1rem;
+        top: 1rem;
+        transform: scale(0.9);
+    }
+    
+    .nav-item {
+        padding: 0.8rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .vertical-nav {
+        left: 0.5rem;
+        top: 0.5rem;
+        transform: scale(0.8);
+    }
+    
+    .nav-item {
+        padding: 0.7rem 1rem;
+        font-size: 0.85rem;
+    }
+}
+
+
+/* ===========================================
+   HERO SECTION
+   =========================================== */
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('../images/hero/heropage.jpg') center center/cover no-repeat;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #ffffff;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 0 2rem;
+}
+
+/* Interactive Title Container */
+.interactive-title-container {
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+    padding: 0 1rem;
+    overflow: hidden; /* Prevent horizontal overflow */
+}
+
+/* Text Pressure Effect Styles */
+.text-pressure-title {
+    cursor: default;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    will-change: transform;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    max-width: 100%;
+    word-break: break-word;
+    overflow: hidden;
+}
+
+.text-pressure-title span {
+    transition: font-variation-settings 0.1s ease-out, opacity 0.1s ease-out;
+    will-change: font-variation-settings, opacity;
+}
+
+/* Fallback for browsers without variable font support */
+@supports not (font-variation-settings: normal) {
+    .text-pressure-title {
+        font-weight: 400;
+        font-style: normal;
+    }
+    
+    .text-pressure-title span:hover {
+        font-weight: 700;
+        transform: scaleX(1.2);
+    }
+}
+
+.hero-content h1 {
+}
+
+
+/* ===========================================
+   IMAGE MANAGEMENT STYLES
+   =========================================== */
+
+/* Concert Image Containers */
+.concert-image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 0;
+    background-color: #f0f0f0;
+}
+
+.concert-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+}
+
+.concert-image.lazy {
+    opacity: 0;
+}
+
+.concert-image.loaded {
+    opacity: 1;
+}
+
+.concert-image.fallback-image {
+    object-fit: contain;
+    background-color: #f9f9f9;
+}
+
+/* Image Skeleton Loader */
+.image-skeleton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+}
+
+.image-skeleton.error-state {
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 0.875rem;
+}
+
+.image-skeleton.error-state::after {
+    content: "Image unavailable";
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Concert Card Image Styles */
+.upcoming-concert-card .concert-image-container {
+    margin-bottom: 1rem;
+}
+
+.upcoming-concert-card.has-images .concert-card {
+        border-radius: 0;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+}
+
+
+
+/* Responsive Image Adjustments */
+@media (max-width: 768px) {
+    .concert-image-container {
+        aspect-ratio: 4 / 3;
+    }
+    
+    .upcoming-concert-card.has-images .concert-card {
+        border-radius: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .concert-image-container {
+        aspect-ratio: 16 / 9;
+    }
+    
+}
+
+/* Image Performance Optimizations */
+.concert-image {
+    will-change: opacity;
+}
+
+.image-skeleton {
+    will-change: background-position;
+}
+
+/* Focus and Accessibility */
+.upcoming-concert-card:focus-within .concert-image-container {
+    outline: 2px solid #27D3F5;
+    outline-offset: 2px;
+}
+
+/* High DPI Display Support */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .concert-image {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Dark Mode Support (Future Enhancement) */
+@media (prefers-color-scheme: dark) {
+    .image-skeleton {
+        background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+        background-size: 200% 100%;
+    }
+    
+    .concert-image.fallback-image {
+        background-color: #2a2a2a;
+    }
+    
+    .image-skeleton.error-state {
+        background: #2a2a2a;
+        color: #999;
+    }
+}
+
+/* ===========================================
+   MAIN SECTIONS
+   =========================================== */
+
+main {
+    margin-top: 0;
+}
+
+section {
+    padding: 4rem 0;
+}
+
+.gallery {
+    background: #fff;
+}
+
+.gallery h2 {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+/* ===========================================
+   CURVED 3D CAROUSEL (RESTORED)
+   =========================================== */
+
+.carousel-container {
+    position: relative;
+    margin: 4rem 0;
+    padding: 0;
+    width: 100vw;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1500px !important;
+    overflow: hidden;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+}
+
+.carousel-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out;
+}
+
+@keyframes slideCarousel {
+    from {
+        transform: translateX(0px);
+    }
+    to {
+        transform: translateX(-100px);
+    }
+}
+
+@keyframes rotateCarousel {
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(-360deg);
+    }
+}
+
+.carousel-slide {
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    left: 50%;
+    top: 50%;
+    transform-origin: center center;
+    transform-style: preserve-3d;
+}
+
+/* HORIZONTAL CURVED CAROUSEL SLIDES */
+.carousel-slide {
+    background: transparent !important;
+    border: 2px solid rgba(255,255,255,0.3) !important;
+    border-radius: 0 !important;
+    opacity: 1 !important;
+    z-index: 999 !important;
+    display: block !important;
+    position: absolute !important;
+    width: 300px !important;
+    height: 300px !important;
+}
+
+/* HORIZONTAL CURVED CAROUSEL - EVEN 150PX SPACING FOR ALL SLIDES */
+.carousel-slide:nth-child(1) {
+    transform: translate(-600%, -50%) rotateX(2deg) rotateY(-4deg) translateZ(80px) !important;
+    left: 50% !important; top: 50% !important;
+}
+.carousel-slide:nth-child(2) {
+    transform: translate(-450%, -50%) rotateX(1.5deg) rotateY(-3deg) translateZ(80px) !important;
+    left: 50% !important; top: 50% !important;
+}
+.carousel-slide:nth-child(3) {
+    transform: translate(-300%, -50%) rotateX(1deg) rotateY(-2deg) translateZ(80px) !important;
+    left: 50% !important; top: 50% !important;
+}
+.carousel-slide:nth-child(4) {
+    transform: translate(-150%, -50%) rotateX(0.5deg) rotateY(-1deg) translateZ(80px) !important;
+    left: 50% !important; top: 50% !important;
+}
+.carousel-slide:nth-child(5) {
+    transform: translate(0%, -50%) rotateX(0deg) rotateY(0deg) translateZ(80px) !important;
+    left: 50% !important; top: 50% !important;
+}
+.carousel-slide:nth-child(6) {
+    transform: translate(150%, -50%) rotateX(0.5deg) rotateY(1deg) translateZ(80px) !important;
+    left: 50% !important; top: 50% !important;
+}
+.carousel-slide:nth-child(7) {
+    transform: translate(300%, -50%) rotateX(1deg) rotateY(2deg) translateZ(80px) !important;
+    left: 50% !important; top: 50% !important;
+}
+.carousel-slide:nth-child(8) {
+    transform: translate(450%, -50%) rotateX(1.5deg) rotateY(3deg) translateZ(80px) !important;
+    left: 50% !important; top: 50% !important;
+}
+.carousel-slide:nth-child(9) {
+    transform: translate(600%, -50%) rotateX(2deg) rotateY(4deg) translateZ(80px) !important;
+    left: 50% !important; top: 50% !important;
+}
+
+/* DUPLICATE SLIDES FOR INFINITE SCROLL - CONTINUING EVEN 150PX SPACING */
+.carousel-slide:nth-child(10) {
+    transform: translate(750%, -50%) rotateX(2deg) rotateY(-4deg) translateZ(80px) !important;
+    left: 50% !important; top: 50% !important;
+}
+.carousel-slide:nth-child(11) {
+    transform: translate(900%, -50%) rotateX(1.5deg) rotateY(-3deg) translateZ(80px) !important;
+    left: 50% !important; top: 50% !important;
+}
+.carousel-slide:nth-child(12) {
+    transform: translate(1050%, -50%) rotateX(1deg) rotateY(-2deg) translateZ(80px) !important;
+    left: 50% !important; top: 50% !important;
+}
+.carousel-slide:nth-child(13) {
+    transform: translate(1200%, -50%) rotateX(0.5deg) rotateY(-1deg) translateZ(80px) !important;
+    left: 50% !important; top: 50% !important;
+}
+.carousel-slide:nth-child(14) {
+    transform: translate(1350%, -50%) rotateX(0deg) rotateY(0deg) translateZ(80px) !important;
+    left: 50% !important; top: 50% !important;
+}
+.carousel-slide:nth-child(15) {
+    transform: translate(1500%, -50%) rotateX(0.5deg) rotateY(1deg) translateZ(80px) !important;
+    left: 50% !important; top: 50% !important;
+}
+.carousel-slide:nth-child(16) {
+    transform: translate(1650%, -50%) rotateX(1deg) rotateY(2deg) translateZ(80px) !important;
+    left: 50% !important; top: 50% !important;
+}
+.carousel-slide:nth-child(17) {
+    transform: translate(1800%, -50%) rotateX(1.5deg) rotateY(3deg) translateZ(80px) !important;
+    left: 50% !important; top: 50% !important;
+}
+.carousel-slide:nth-child(18) {
+    transform: translate(1950%, -50%) rotateX(2deg) rotateY(4deg) translateZ(80px) !important;
+    left: 50% !important; top: 50% !important;
+}
+
+/* No cloned slides needed - using 9 slides with even spacing */
+
+.concert-card {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+    position: relative !important;
+    display: block !important;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.4) !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+.carousel-slide .concert-card img {
+    width: 300px !important;
+    height: 300px !important;
+    object-fit: cover !important;
+    display: block !important;
+    z-index: 1 !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+.concert-info {
+    display: none !important;
+}
+
+.concert-card:hover {
+    transform: none;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+}
+
+.carousel-slide .concert-card img {
+    width: 300px !important;
+    height: 300px !important;
+    object-fit: cover !important;
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    background: transparent;
+}
+
+.concert-info {
+    display: none !important;
+}
+
+.concert-info h3 {
+    margin-bottom: 0.5rem;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.concert-info p {
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 0.25rem;
+    font-size: 0.9rem;
+}
+
+.concert-date {
+    color: rgba(255,255,255,0.8);
+    font-style: italic;
+    font-size: 0.85rem;
+}
+
+/* Responsive curved carousel adjustments */
+@media (max-width: 1024px) {
+    .carousel-container {
+        height: 450px;
+        perspective: 1800px;
+        margin-left: calc(-50vw + 50%);
+        margin-right: calc(-50vw + 50%);
+        width: 100vw;
+    }
+
+    .carousel-slide {
+        width: 240px;
+        height: 320px;
+    }
+
+    .carousel-slide:nth-child(1) { transform: translate(-50%, -50%) rotateY(0deg) translateZ(450px); }
+    .carousel-slide:nth-child(2) { transform: translate(-50%, -50%) rotateY(40deg) translateZ(450px); }
+    .carousel-slide:nth-child(3) { transform: translate(-50%, -50%) rotateY(80deg) translateZ(450px); }
+    .carousel-slide:nth-child(4) { transform: translate(-50%, -50%) rotateY(120deg) translateZ(450px); }
+    .carousel-slide:nth-child(5) { transform: translate(-50%, -50%) rotateY(160deg) translateZ(450px); }
+    .carousel-slide:nth-child(6) { transform: translate(-50%, -50%) rotateY(200deg) translateZ(450px); }
+    .carousel-slide:nth-child(7) { transform: translate(-50%, -50%) rotateY(240deg) translateZ(450px); }
+    .carousel-slide:nth-child(8) { transform: translate(-50%, -50%) rotateY(280deg) translateZ(450px); }
+    .carousel-slide:nth-child(9) { transform: translate(-50%, -50%) rotateY(320deg) translateZ(450px); }
+
+    .carousel-slide.clone:nth-child(10) { transform: translate(-50%, -50%) rotateY(360deg) translateZ(450px); }
+    .carousel-slide.clone:nth-child(11) { transform: translate(-50%, -50%) rotateY(400deg) translateZ(450px); }
+    .carousel-slide.clone:nth-child(12) { transform: translate(-50%, -50%) rotateY(440deg) translateZ(450px); }
+    .carousel-slide.clone:nth-child(13) { transform: translate(-50%, -50%) rotateY(480deg) translateZ(450px); }
+    .carousel-slide.clone:nth-child(14) { transform: translate(-50%, -50%) rotateY(520deg) translateZ(450px); }
+    .carousel-slide.clone:nth-child(15) { transform: translate(-50%, -50%) rotateY(560deg) translateZ(450px); }
+    .carousel-slide.clone:nth-child(16) { transform: translate(-50%, -50%) rotateY(600deg) translateZ(450px); }
+    .carousel-slide.clone:nth-child(17) { transform: translate(-50%, -50%) rotateY(640deg) translateZ(450px); }
+    .carousel-slide.clone:nth-child(18) { transform: translate(-50%, -50%) rotateY(680deg) translateZ(450px); }
+}
+
+@media (max-width: 768px) {
+    .carousel-container {
+        height: 400px;
+        perspective: 1200px;
+        padding: 0;
+        margin-left: calc(-50vw + 50%);
+        margin-right: calc(-50vw + 50%);
+        width: 100vw;
+    }
+
+    .carousel-slide {
+        width: 200px;
+        height: 280px;
+    }
+
+    .carousel-slide:nth-child(1) { transform: translate(-50%, -50%) rotateY(0deg) translateZ(400px); }
+    .carousel-slide:nth-child(2) { transform: translate(-50%, -50%) rotateY(45deg) translateZ(400px); }
+    .carousel-slide:nth-child(3) { transform: translate(-50%, -50%) rotateY(90deg) translateZ(400px); }
+    .carousel-slide:nth-child(4) { transform: translate(-50%, -50%) rotateY(135deg) translateZ(400px); }
+    .carousel-slide:nth-child(5) { transform: translate(-50%, -50%) rotateY(180deg) translateZ(400px); }
+    .carousel-slide:nth-child(6) { transform: translate(-50%, -50%) rotateY(225deg) translateZ(400px); }
+    .carousel-slide:nth-child(7) { transform: translate(-50%, -50%) rotateY(270deg) translateZ(400px); }
+    .carousel-slide:nth-child(8) { transform: translate(-50%, -50%) rotateY(315deg) translateZ(400px); }
+
+    .carousel-slide.clone:nth-child(9) { transform: translate(-50%, -50%) rotateY(360deg) translateZ(400px); }
+    .carousel-slide.clone:nth-child(10) { transform: translate(-50%, -50%) rotateY(405deg) translateZ(400px); }
+    .carousel-slide.clone:nth-child(11) { transform: translate(-50%, -50%) rotateY(450deg) translateZ(400px); }
+    .carousel-slide.clone:nth-child(12) { transform: translate(-50%, -50%) rotateY(495deg) translateZ(400px); }
+    .carousel-slide.clone:nth-child(13) { transform: translate(-50%, -50%) rotateY(540deg) translateZ(400px); }
+    .carousel-slide.clone:nth-child(14) { transform: translate(-50%, -50%) rotateY(585deg) translateZ(400px); }
+    .carousel-slide.clone:nth-child(15) { transform: translate(-50%, -50%) rotateY(630deg) translateZ(400px); }
+    .carousel-slide.clone:nth-child(16) { transform: translate(-50%, -50%) rotateY(675deg) translateZ(400px); }
+
+    .concert-info {
+        padding: 1rem;
+    }
+
+    .concert-info h3 {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .carousel-container {
+        height: 350px;
+        perspective: 900px;
+        padding: 0;
+        margin-left: calc(-50vw + 50%);
+        margin-right: calc(-50vw + 50%);
+        width: 100vw;
+    }
+
+    .carousel-slide {
+        width: 160px;
+        height: 240px;
+    }
+
+    .carousel-slide:nth-child(1) { transform: translate(-50%, -50%) rotateY(0deg) translateZ(300px); }
+    .carousel-slide:nth-child(2) { transform: translate(-50%, -50%) rotateY(60deg) translateZ(300px); }
+    .carousel-slide:nth-child(3) { transform: translate(-50%, -50%) rotateY(120deg) translateZ(300px); }
+    .carousel-slide:nth-child(4) { transform: translate(-50%, -50%) rotateY(180deg) translateZ(300px); }
+    .carousel-slide:nth-child(5) { transform: translate(-50%, -50%) rotateY(240deg) translateZ(300px); }
+    .carousel-slide:nth-child(6) { transform: translate(-50%, -50%) rotateY(300deg) translateZ(300px); }
+
+    .carousel-slide.clone:nth-child(7) { transform: translate(-50%, -50%) rotateY(360deg) translateZ(300px); }
+    .carousel-slide.clone:nth-child(8) { transform: translate(-50%, -50%) rotateY(420deg) translateZ(300px); }
+    .carousel-slide.clone:nth-child(9) { transform: translate(-50%, -50%) rotateY(480deg) translateZ(300px); }
+    .carousel-slide.clone:nth-child(10) { transform: translate(-50%, -50%) rotateY(540deg) translateZ(300px); }
+    .carousel-slide.clone:nth-child(11) { transform: translate(-50%, -50%) rotateY(600deg) translateZ(300px); }
+    .carousel-slide.clone:nth-child(12) { transform: translate(-50%, -50%) rotateY(660deg) translateZ(300px); }
+
+    .concert-info {
+        padding: 0.75rem;
+    }
+
+    .concert-info h3 {
+        font-size: 1rem;
+    }
+
+    .concert-info p {
+        font-size: 0.8rem;
+    }
+}
+
+/* ===========================================
+   UPCOMING CONCERTS SECTION
+   =========================================== */
+
+.upcoming-concerts {
+    background: #fff;
+}
+
+.upcoming-concerts h2 {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.no-concerts-message {
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.no-concerts-message p:first-child {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.no-concerts-message p:last-child {
+    color: #666;
+}
+
+.upcoming-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+        transition: transform 0.3s ease;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+
+.upcoming-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #333;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-right: 1.5rem;
+    min-width: 80px;
+    text-align: center;
+}
+
+.upcoming-date .month {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.upcoming-date .day {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    margin: 0.25rem 0;
+}
+
+.upcoming-date .year {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
+.upcoming-info {
+    flex: 1;
+}
+
+.upcoming-info h3 {
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.upcoming-info p {
+    color: #666;
+    margin-bottom: 0.25rem;
+}
+
+.upcoming-time {
+    color: #999;
+    font-style: italic;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+/* Responsive adjustments for upcoming concerts */
+@media (max-width: 768px) {
+    .upcoming-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+    }
+    
+    .upcoming-date {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+}
+
+/* ===========================================
+   ABOUT SECTION
+   =========================================== */
+
+.about {
+    background: #fff;
+}
+
+.about-title {
+    color: #000;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.about-image {
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+}
+
+.about-image img:hover {
+    filter: grayscale(0%);
+}
+
+.about-text {
+    padding-left: 2rem;
+}
+
+.about-text p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.about-intro {
+    font-size: 1.1rem;
+}
+
+.about-title-inline {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+    line-height: 1;
+    margin-right: 0.5rem;
+    float: left;
+    margin-top: -0.2rem;
+}
+
+/* Responsive adjustments for about section */
+@media (max-width: 768px) {
+    .about-text {
+        padding-left: 0;
+        margin-top: 2rem;
+    }
+}
+
+/* ===========================================
+   SPACING UTILITIES
+   =========================================== */
+
+.section-spacing {
+    margin: 4rem 0;
+}
+
+.large-spacing {
+    margin: 6rem 0;
+}
+
+/* ===========================================
+   CONCERT PAGES
+   =========================================== */
+
+.concert-page {
+    margin-top: 0;
+}
+
+.concert-hero {
+    background: #f9f9f9;
+    padding: 6rem 0 4rem;
+    text-align: center;
+}
+
+.concert-title {
+    color: #0046FF;
+    margin-bottom: 1.5rem;
+}
+
+.concert-details {
+    margin-top: 1rem;
+}
+
+.concert-venue {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.concert-date {
+    color: #666;
+}
+
+.concert-content {
+    padding: 4rem 0;
+    background: #fff;
+}
+
+.concert-description h2,
+.concert-description h3 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    margin-top: 2rem;
+}
+
+.concert-description h2:first-child {
+    margin-top: 0;
+}
+
+.concert-description p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.concert-program {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+}
+
+.concert-program li {
+    color: #666;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 2rem;
+}
+
+.concert-program li::before {
+    content: "♪";
+    color: #0046FF;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+.concert-program li:last-child {
+    border-bottom: none;
+}
+
+.concert-sidebar {
+    padding-left: 2rem;
+}
+
+.concert-info-box {
+    background: #f9f9f9;
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid #0046FF;
+}
+
+.concert-info-box h3 {
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.info-item {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-label {
+    color: #666;
+    font-weight: 600;
+    min-width: 80px;
+}
+
+.info-value {
+    color: #333;
+    text-align: right;
+}
+
+.concert-gallery {
+    padding: 4rem 0;
+    background: #f9f9f9;
+}
+
+.concert-gallery h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #333;
+}
+
+.gallery-item {
+    margin-bottom: 2rem;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+
+.concert-navigation {
+    padding: 3rem 0;
+    background: #fff;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-back,
+.btn-next {
+    text-decoration: none;
+    color: #fff;
+    background: #27D3F5;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+
+.concert-card-link {
+    text-decoration: none;
+    display: block;
+    color: inherit;
+}
+
+
+/* Responsive adjustments for concert pages */
+@media (max-width: 768px) {
+    .concert-hero {
+        padding: 4rem 0 3rem;
+    }
+    
+    .concert-sidebar {
+        padding-left: 0;
+        margin-top: 3rem;
+    }
+    
+    .nav-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .btn-back,
+    .btn-next {
+        text-align: center;
+        width: 100%;
+    }
+}
+
+/* ===========================================
+   CONTACT SECTION
+   =========================================== */
+
+.contact {
+    background: #FF8040;
+    color: white;
+    padding: 2rem 0 1.5rem 0;
+}
+
+.contact .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.contact-document {
+    text-align: left;
+    font-family: 'Courier New', monospace;
+    line-height: 1.8;
+    padding: 2rem 0;
+}
+
+.contact-title {
+    color: white;
+    margin: 0 0 1.5rem 0;
+    font-size: 1.5rem;
+    font-weight: normal;
+    font-family: 'Courier New', monospace;
+}
+
+.contact-line {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+    color: white;
+}
+
+.email-link {
+    color: white;
+    text-decoration: underline;
+    font-family: 'Courier New', monospace;
+    transition: color 0.3s ease;
+}
+
+.email-link:hover {
+    color: #FF8040;
+}
+
+.social-link {
+    color: white;
+    text-decoration: underline;
+    font-family: 'Courier New', monospace;
+    transition: color 0.3s ease;
+}
+
+.social-link:hover {
+    color: #FF8040;
+}
+
+.copyright {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    letter-spacing: 0.5px;
+}
+
+/* Responsive contact section */
+@media (max-width: 768px) {
+    .contact {
+        padding: 1.5rem 0 1rem 0;
+    }
+    
+    .contact .container {
+        padding: 0 1.5rem;
+    }
+    
+    .contact-title {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    
+    .contact-line {
+        font-size: 1rem;
+    }
+}
+
+
+/* ===========================================
+   RESPONSIVE ADJUSTMENTS
+   =========================================== */
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem 0;
+    }
+    
+    nav ul {
+        gap: 1rem;
+    }
+    
+    .hero {
+        margin-top: 120px;
+        min-height: 80vh;
+    }
+    
+    .hero-content {
+        padding: 3rem 0;
+    }
+    
+    .text-6xl {
+        font-size: 3rem;
+    }
+    
+    .interactive-title-container {
+        min-height: 120px;
+        padding: 0.5rem;
+        max-width: 100%;
+    }
+
+    .text-pressure-title {
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Override one-page layout for mobile */
+    main > section {
+        min-height: auto;
+        padding: 3rem 0;
+    }
+
+    main > section#home {
+        min-height: 80vh;
+        padding: 0;
+    }
+
+    main > section:not(#home) {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+    
+    main {
+        margin-top: 120px;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding: 0 0.5rem;
+    }
+
+    .text-6xl {
+        font-size: 2.5rem;
+    }
+
+    .text-4xl {
+        font-size: 2rem;
+    }
+
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero-content {
+        padding: 1rem 0.5rem;
+    }
+
+    .interactive-title-container {
+        min-height: 80px;
+        padding: 0.25rem;
+    }
+
+    .text-pressure-title {
+        line-height: 1.2 !important;
+    }
+}
+
+/* ===========================================
+   UPCOMING CONCERTS (API INTEGRATION)
+   =========================================== */
+
+.upcoming-concerts-grid {
+    display: grid;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+/* Responsive grid layouts based on concert count */
+.upcoming-concerts-grid.grid-1 {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 2rem auto;
+}
+
+.upcoming-concerts-grid.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.upcoming-concerts-grid.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.upcoming-concerts-grid.grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.upcoming-concerts-grid.grid-5 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 768px) {
+    .upcoming-concerts-grid.grid-2,
+    .upcoming-concerts-grid.grid-3,
+    .upcoming-concerts-grid.grid-4,
+    .upcoming-concerts-grid.grid-5 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    .upcoming-concerts-grid.grid-3,
+    .upcoming-concerts-grid.grid-4,
+    .upcoming-concerts-grid.grid-5 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Upcoming concert cards */
+.upcoming-concert-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.upcoming-concert-card:hover .concert-card {
+    transform: translateY(-2px);
+    border-color: #0046FF;
+    box-shadow: 0 4px 12px rgba(0, 70, 255, 0.3);
+}
+
+
+.upcoming-concert-card .concert-card {
+    height: auto;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.calendar-widget {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    gap: 1rem;
+}
+
+.calendar-date {
+    background: #0046FF;
+    color: white;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    min-width: 70px;
+    flex-shrink: 0;
+}
+
+.calendar-day {
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.calendar-month {
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 0.25rem;
+    opacity: 0.9;
+}
+
+.calendar-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.calendar-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.calendar-time {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Concert Links */
+.concert-links {
+    margin-top: 1rem;
+}
+
+.visit-website-btn {
+    background: #FF8040;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.visit-website-btn:hover {
+    background: #e6723a;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(255, 128, 64, 0.3);
+}
+
+.visit-website-btn:active {
+    transform: translateY(0);
+}
+
+
+/* Loading states */
+.concerts-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+}
+
+.loading-spinner {
+    text-align: center;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #E9E9E9;
+    border-top: 3px solid #0046FF;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-spinner p {
+    color: #666;
+    font-style: italic;
+}
+
+/* Error states */
+.concerts-error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+}
+
+.error-message {
+    text-align: center;
+    padding: 2rem;
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    max-width: 400px;
+}
+
+.error-message p {
+    color: #856404;
+    margin-bottom: 1rem;
+}
+
+.retry-btn {
+    background: #0046FF;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.retry-btn:hover {
+    background: #001BB7;
+}
+
+
+/* Simple Concert Modal */
+.simple-concert-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.simple-modal-content {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    position: relative;
+    overflow-y: auto;
+}
+
+.simple-modal-close {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.simple-modal-close:focus {
+    color: #333;
+}
+
+.simple-modal-content h2 {
+    margin: 0 0 1rem 0;
+    color: #333;
+}
+
+.simple-modal-content p {
+    margin: 0.5rem 0;
+    color: #666;
+}
+
+/* Concert Modal */
+.concert-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+}
+
+.concert-modal-content {
+    background-color: #fff;
+    margin: 3% auto;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    position: relative;
+    animation: modalSlideIn 0.3s ease-out;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+/* Hide scrollbar for webkit browsers */
+.concert-modal-content::-webkit-scrollbar {
+    display: none;
+    width: 0px;
+    background: transparent;
+}
+
+.concert-modal-content::-webkit-scrollbar-track {
+    display: none;
+}
+
+.concert-modal-content::-webkit-scrollbar-thumb {
+    display: none;
+}
+
+
+.concert-modal-close {\n    color: #aaa;\n    position: absolute;\n    top: 15px;\n    right: 25px;\n    font-size: 28px;\n    font-weight: bold;\n    cursor: pointer;\n    z-index: 2001;\n    transition: color 0.3s ease;\n    background: rgba(255, 255, 255, 0.9);\n    width: 40px;\n    height: 40px;\n    border-radius: 50%;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.concert-modal-close:focus {\n    color: #333;\n}\n\n.concert-modal-header {\n    padding: 2rem 2rem 1rem 2rem;\n    border-bottom: 1px solid #e9ecef;\n}\n\n.concert-modal-title {\n    margin: 0 0 1rem 0;\n    font-size: 1.8rem;\n    color: #333;\n}\n\n.concert-modal-details {\n    margin-top: 1rem;\n}\n\n.concert-modal-details p {\n    margin: 0.5rem 0;\n    color: #666;\n}\n\n.concert-modal-body {\n    padding: 2rem;\n    display: grid;\n    gap: 2rem;\n}\n\n.concert-modal-image {\n    text-align: center;\n}\n\n.concert-modal-image img {\n    width: 100%;\n    max-width: 400px;\n    height: auto;\n    border-radius: 8px;\n}\n\n.concert-modal-description {\n    line-height: 1.8;\n    color: #333;\n}\n\n.concert-modal-calendar-info {\n    background: #f8f9fa;\n    padding: 1.5rem;\n    border-radius: 8px;\n    border-left: 4px solid #0046FF;\n}\n\n.concert-modal-calendar-info h4 {\n    margin: 0 0 1rem 0;\n    color: #0046FF;\n    font-size: 1.1rem;\n}\n\n.concert-modal-calendar-info p {\n    margin: 0.5rem 0;\n    color: #666;\n}\n\n.concert-modal-calendar-info a {\n    color: #0046FF;\n    text-decoration: none;\n    font-weight: 600;\n}\n\n.no-image {\n    padding: 3rem;\n    background: #f8f9fa;\n    color: #666;\n    text-align: center;\n    border-radius: 8px;\n    font-style: italic;\n}\n\n@keyframes modalSlideIn {\n    from {\n        opacity: 0;\n        transform: translateY(-50px);\n    }\n    to {\n        opacity: 1;\n        transform: translateY(0);\n    }\n}\n\n@media (max-width: 768px) {\n    .concert-modal-content {\n        width: 95%;\n        margin: 10% auto;\n    }\n    \n    .concert-modal-header {\n        padding: 1.5rem 1.5rem 1rem 1.5rem;\n    }\n    \n    .concert-modal-body {\n        padding: 1.5rem;\n    }\n    \n    .concert-modal-close {\n        top: 10px;\n        right: 15px;\n        font-size: 24px;\n        width: 35px;\n        height: 35px;\n    }\n}\n\n/* Gallery Styles */
+
+
+
+.photo-gallery {
+    padding: 4rem 0;
+    background: #fff;
+}
+
+.photo-gallery h2 {
+    margin-bottom: 3rem;
+    text-align: center;
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 4rem;
+    width: 100%;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.gallery-item {
+    aspect-ratio: 4/3;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    border: none;
+}
+
+.gallery-item h3 {
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+
+/* Source indicators */
+.source-google-calendar .concert-card {
+    border-left: 4px solid #0046FF;
+}
+
+.source-static-fallback .concert-card {
+    border-left: 4px solid #ffc107;
+    opacity: 0.9;
+}
+
+.placeholder .concert-card {
+    border-left: 4px solid #6c757d;
+    opacity: 0.8;
+}
+
+/* ===========================================
+   MODAL
+   =========================================== */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    padding: 0;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    animation: modalSlideIn 0.3s ease-out;
+    overflow: hidden;
+    max-height: 90vh;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1001;
+    transition: color 0.3s ease;
+}
+
+.close:focus {
+    color: #333;
+}
+
+.modal-header {
+    padding: 2rem 2rem 1rem 2rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.modal-details {
+    margin-top: 1rem;
+}
+
+.modal-details p {
+    margin: 0.25rem 0;
+    color: #666;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-image {
+    margin-bottom: 2rem;
+}
+
+.modal-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.modal-description {
+    line-height: 1.8;
+}
+
+.modal-description p {
+    margin-bottom: 1rem;
+}
+
+/* Modal Navigation Buttons */
+.modal-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1002;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+.modal-nav-prev {
+    left: 20px;
+}
+
+.modal-nav-next {
+    right: 20px;
+}
+
+/* Mobile responsive for modal */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+    
+    .modal-header {
+        padding: 1.5rem 1.5rem 1rem 1.5rem;
+    }
+    
+    .modal-body {
+        padding: 1.5rem;
+    }
+    
+    .close {
+        top: 10px;
+        right: 20px;
+        font-size: 24px;
+    }
+    
+    .modal-nav-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+    
+    .modal-nav-prev {
+        left: 10px;
+    }
+    
+    .modal-nav-next {
+        right: 10px;
+    }
+}
