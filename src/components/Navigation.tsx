@@ -6,6 +6,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { NavigationProps } from '@/types';
 import { NAV_ITEMS, ANIMATION_CONFIG } from '@/constants';
 import { scrollToSection, debounce, cn } from '@/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Concert {
   id: string;
@@ -30,6 +31,7 @@ interface NavigationWithConcertsProps extends NavigationProps {
 }
 
 export default function Navigation({ className, concerts, isLoading }: NavigationWithConcertsProps) {
+  const { t } = useLanguage();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -95,7 +97,7 @@ export default function Navigation({ className, concerts, isLoading }: Navigatio
               aria-label={`Navigate to ${item.label} section`}
             >
               <span className={cn(!showExpanded && 'sr-only')}>
-                {item.label}
+                {t.nav[item.label as keyof typeof t.nav]}
               </span>
             </motion.button>
           ))}
@@ -189,10 +191,10 @@ export default function Navigation({ className, concerts, isLoading }: Navigatio
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      Stay Tuned
+                      {t.concerts.stayTuned}
                     </motion.a>,
                     <div key={`dot1-${index}`} className="w-1.5 h-1.5 md:w-2 md:h-2 bg-blue-400 rounded-full flex-shrink-0"></div>,
-                    <span key={`coming-soon-${index}`} className="text-white/90 text-sm md:text-lg font-medium">Concerts Coming Soon</span>,
+                    <span key={`coming-soon-${index}`} className="text-white/90 text-sm md:text-lg font-medium">{t.concerts.comingSoon}</span>,
                     <div key={`dot2-${index}`} className="w-1.5 h-1.5 md:w-2 md:h-2 bg-blue-400 rounded-full flex-shrink-0"></div>
                   ]).flat()}
                 </>

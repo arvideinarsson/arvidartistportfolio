@@ -208,17 +208,37 @@ export default function ConcertsPage() {
 
                   {/* Content */}
                   <div className="max-w-3xl">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-3">
-                      {concert.title}
-                    </h2>
+                    {concert.ticketUrl ? (
+                      <a
+                        href={concert.ticketUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group"
+                      >
+                        <h2 className="text-3xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                          {concert.title}
+                        </h2>
+                      </a>
+                    ) : (
+                      <h2 className="text-3xl font-bold text-gray-900 mb-3">
+                        {concert.title}
+                      </h2>
+                    )}
                     {concert.venue && concert.date && (
                       <p className="text-gray-500 text-sm mb-3">
                         {concert.venue} • {concert.date}
                       </p>
                     )}
-                    <p className="text-gray-600 leading-relaxed">
-                      {concert.description}
-                    </p>
+                    {concert.description && concert.description.includes('<') ? (
+                      <div
+                        className="text-gray-600 leading-relaxed prose prose-sm max-w-none"
+                        dangerouslySetInnerHTML={{ __html: concert.description }}
+                      />
+                    ) : (
+                      <p className="text-gray-600 leading-relaxed">
+                        {concert.description}
+                      </p>
+                    )}
                   </div>
                 </motion.article>
               );
@@ -250,12 +270,32 @@ export default function ConcertsPage() {
 
                 {/* Content */}
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900 mb-2">
-                    {concert.title}
-                  </h2>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    {concert.description}
-                  </p>
+                  {concert.ticketUrl ? (
+                    <a
+                      href={concert.ticketUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group"
+                    >
+                      <h2 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                        {concert.title}
+                      </h2>
+                    </a>
+                  ) : (
+                    <h2 className="text-xl font-bold text-gray-900 mb-2">
+                      {concert.title}
+                    </h2>
+                  )}
+                  {concert.description && concert.description.includes('<') ? (
+                    <div
+                      className="text-gray-600 text-sm leading-relaxed prose prose-sm max-w-none"
+                      dangerouslySetInnerHTML={{ __html: concert.description }}
+                    />
+                  ) : (
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      {concert.description}
+                    </p>
+                  )}
                 </div>
               </motion.article>
             );

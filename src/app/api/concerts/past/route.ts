@@ -41,51 +41,14 @@ async function fetchConcertImages(concertTitle: string, apiKey: string): Promise
       return [];
     }
 
+    // Clean concert title - remove all tags in parentheses
     const cleanTitle = concertTitle
-      .replace(/\[CONCERT\]/gi, '')
-      .replace(/\(CONCERT\)/gi, '')
+      .replace(/\([^)]*\)/g, '')
       .trim();
 
-    // Search for concert folder within parent folder
-    const folderSearchUrl = `https://www.googleapis.com/drive/v3/files?q='${parentFolderId}' in parents and mimeType='application/vnd.google-apps.folder' and name contains '${encodeURIComponent(cleanTitle)}'&key=${apiKey}`;
-    const folderResponse = await fetch(folderSearchUrl, {
-      headers: {
-        'Referer': 'http://localhost:3000'
-      }
-    });
+    // Search for images directly in "Konsert Bilder" folder that contain the concert title in the filename
+    const imagesSearchUrl = `https://www.googleapis.com/drive/v3/files?q='${parentFolderId}' in parents and (mimeType contains 'image/') and name contains '${encodeURIComponent(cleanTitle)}'&fields=files(id,name,webViewLink,webContentLink)&key=${apiKey}`;
 
-    if (!folderResponse.ok) {
-      console.warn('Could not search concert folders:', folderResponse.status);
-      return [];
-    }
-
-    const folderData = await folderResponse.json();
-    const concertFolders = folderData.files || [];
-
-    if (concertFolders.length === 0) {
-      const firstWord = cleanTitle.split(' ')[0];
-      if (firstWord && firstWord.length > 2) {
-        const altSearchUrl = `https://www.googleapis.com/drive/v3/files?q='${parentFolderId}' in parents and mimeType='application/vnd.google-apps.folder' and name contains '${encodeURIComponent(firstWord)}'&key=${apiKey}`;
-        const altResponse = await fetch(altSearchUrl);
-        if (altResponse.ok) {
-          const altData = await altResponse.json();
-          const altFolders = altData.files || [];
-          if (altFolders.length > 0) {
-            concertFolders.push(altFolders[0]);
-          }
-        }
-      }
-    }
-
-    if (concertFolders.length === 0) {
-      console.warn(`No folder found for concert: ${cleanTitle}`);
-      return [];
-    }
-
-    const concertFolderId = concertFolders[0].id;
-
-    // Get images from concert folder
-    const imagesSearchUrl = `https://www.googleapis.com/drive/v3/files?q='${concertFolderId}' in parents and (mimeType contains 'image/')&fields=files(id,name,webViewLink,webContentLink)&key=${apiKey}`;
     const imagesResponse = await fetch(imagesSearchUrl, {
       headers: {
         'Referer': 'http://localhost:3000'
@@ -98,16 +61,29 @@ async function fetchConcertImages(concertTitle: string, apiKey: string): Promise
     }
 
     const imagesData = await imagesResponse.json();
-    const imageFiles = imagesData.files || [];
+    let imageFiles = imagesData.files || [];
+
+    // If no exact match, try searching with just the first word
+    if (imageFiles.length === 0) {
+      const firstWord = cleanTitle.split(' ')[0];
+      if (firstWord && firstWord.length > 2) {
+        const altSearchUrl = `https://www.googleapis.com/drive/v3/files?q='${parentFolderId}' in parents and (mimeType contains 'image/') and name contains '${encodeURIComponent(firstWord)}'&fields=files(id,name,webViewLink,webContentLink)&key=${apiKey}`;
+        const altResponse = await fetch(altSearchUrl);
+        if (altResponse.ok) {
+          const altData = await altResponse.json();
+          imageFiles = altData.files || [];
+        }
+      }
+    }
 
     const imageUrls = imageFiles
       .slice(0, 5)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map((file: any) => {
-        return `https://drive.google.com/uc?export=view&id=${file.id}`;
+        // Use thumbnail URL which works better for direct embedding
+        return `https://lh3.googleusercontent.com/d/${file.id}`;
       });
 
-    console.log(`Found ${imageUrls.length} images for concert: ${cleanTitle}`);
     return imageUrls;
 
   } catch (error) {
@@ -146,15 +122,22 @@ export async function GET() {
     const data = await response.json();
     const events: GoogleCalendarEvent[] = data.items || [];
 
-    // Filter for concert events
+    // Filter for concert events - any event with tags in parentheses OR specific keywords
     const concertEvents = events.filter((event: GoogleCalendarEvent) => {
       const title = event.summary || '';
-      return title.includes(tagFilter) ||
-             title.includes('[CONCERT]') ||
-             title.includes('(CONCERT)') ||
-             title.toLowerCase().includes('concert') ||
-             title.toLowerCase().includes('performance') ||
-             title.toLowerCase().includes('recital');
+      const lowerTitle = title.toLowerCase();
+
+      // Check if title has any tag in parentheses at the start (case-insensitive)
+      const hasParenthesesTag = /^\([^)]+\)/i.test(title);
+
+      // Check for specific keywords
+      const hasKeyword = lowerTitle.includes('concert') ||
+                        lowerTitle.includes('konsert') ||
+                        lowerTitle.includes('event') ||
+                        lowerTitle.includes('performance') ||
+                        lowerTitle.includes('recital');
+
+      return hasParenthesesTag || hasKeyword;
     });
 
     // Transform to concert format
@@ -166,10 +149,9 @@ export async function GET() {
     for (const event of recentPastConcerts) {
       const title = event.summary || '';
       let venue = event.location || 'TBA';
+      // Remove all tags in parentheses from title
       let cleanTitle = title
-        .replace(tagFilter, '')
-        .replace('[CONCERT]', '')
-        .replace('(CONCERT)', '')
+        .replace(/\([^)]*\)/g, '')
         .trim();
 
       const atMatch = cleanTitle.match(/(.+?)\s+at\s+(.+)/i);

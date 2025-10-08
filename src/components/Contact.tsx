@@ -6,8 +6,10 @@ import { useState } from 'react';
 import { ContactProps } from '@/types';
 import { CONTACT_INFO, ANIMATION_CONFIG } from '@/constants';
 import { cn } from '@/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Contact({ className }: ContactProps) {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     email: '',
     message: ''
@@ -101,7 +103,7 @@ export default function Contact({ className }: ContactProps) {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          Want to contact me?
+          {t.contact.heading}
         </motion.h2>
 
         {/* Contact Form */}
@@ -118,7 +120,7 @@ export default function Contact({ className }: ContactProps) {
           <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
             <div>
               <label htmlFor="email" className="block text-base md:text-lg font-medium text-gray-900 mb-2 md:mb-3">
-                Email Address
+                {t.contact.email}
               </label>
               <input
                 type="email"
@@ -133,7 +135,7 @@ export default function Contact({ className }: ContactProps) {
 
             <div>
               <label htmlFor="message" className="block text-base md:text-lg font-medium text-gray-900 mb-2 md:mb-3">
-                Message
+                {t.contact.message}
               </label>
               <textarea
                 id="message"
@@ -142,7 +144,7 @@ export default function Contact({ className }: ContactProps) {
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all resize-none text-base md:text-lg"
-                placeholder="Your message..."
+                placeholder={t.contact.message}
               />
             </div>
 
@@ -158,10 +160,10 @@ export default function Contact({ className }: ContactProps) {
               whileHover={{ scale: status === 'idle' ? 1.02 : 1 }}
               whileTap={{ scale: status === 'idle' ? 0.98 : 1 }}
             >
-              {status === 'idle' && 'Send Message'}
-              {status === 'sending' && 'Sending...'}
-              {status === 'sent' && 'Message Sent!'}
-              {status === 'error' && 'Try Again'}
+              {status === 'idle' && t.contact.send}
+              {status === 'sending' && t.contact.sending}
+              {status === 'sent' && t.contact.sent}
+              {status === 'error' && t.contact.error}
             </motion.button>
           </form>
         </motion.div>
@@ -202,7 +204,7 @@ export default function Contact({ className }: ContactProps) {
           transition={{ duration: 0.6, delay: 0.8 }}
           viewport={{ once: true }}
         >
-          © {new Date().getFullYear()} Arvid Einarsson. All rights reserved.
+          © {new Date().getFullYear()} Arvid Einarsson. {t.contact.copyright}
         </motion.p>
       </div>
     </div>

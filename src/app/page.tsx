@@ -11,7 +11,9 @@ import About from '@/components/About';
 import Contact from '@/components/Contact';
 import ClickSpark from '@/components/ClickSpark';
 import ParallaxSection from '@/components/ParallaxSection';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { useConcerts } from '@/hooks/useConcerts';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface PastConcert {
   id: string;
@@ -26,6 +28,7 @@ interface PastConcert {
 
 export default function Home() {
   const { concerts, isLoading, source } = useConcerts();
+  const { t } = useLanguage();
   const [pastConcerts, setPastConcerts] = useState<PastConcert[]>([]);
 
   useEffect(() => {
@@ -87,6 +90,7 @@ export default function Home() {
       extraScale={1.2}
     >
       <main className="overflow-x-hidden">
+        <LanguageSwitcher />
         <Navigation
           concerts={concerts}
           isLoading={isLoading}
@@ -117,13 +121,13 @@ export default function Home() {
           <div className="w-full max-w-7xl mx-auto px-8 py-20">
             {/* Title */}
             <motion.h3
-              className="text-2xl font-light text-white mb-8 uppercase tracking-wide text-center"
+              className="text-2xl font-bold text-white mb-8 uppercase tracking-wide text-center"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              concerts
+              {t.concerts.title}
             </motion.h3>
 
             {/* Grid Gallery */}
@@ -165,7 +169,7 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <Link href="/concerts" className="px-8 py-3 bg-white text-gray-900 rounded-full font-medium hover:bg-gray-100 transition-colors duration-200 inline-block">
-                Read More
+                {t.concerts.readMore}
               </Link>
             </motion.div>
           </div>
@@ -215,15 +219,15 @@ export default function Home() {
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6">I&apos;m Arvid,</h2>
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6">{t.about.heading}</h2>
                 <p className="text-base md:text-lg leading-relaxed mb-4">
-                  originally from Hässleholm. Growing up, I never had a proper outlet for my energy until I discovered music in my early teenage years. Together with four friends, I formed the boyband <a href="https://open.spotify.com/artist/00yIymBDOwEA5ydtSLs49v" target="_blank" rel="noopener noreferrer" className="font-bold underline hover:text-gray-300 transition-colors">2Friends</a>, and we began performing for increasingly larger audiences across Sweden. I later competed on Idol as a solo artist, advancing to the quarterfinals.
+                  {t.about.paragraph1.split('2Friends')[0]}<a href="https://open.spotify.com/artist/00yIymBDOwEA5ydtSLs49v" target="_blank" rel="noopener noreferrer" className="font-bold underline hover:text-gray-300 transition-colors">2Friends</a>{t.about.paragraph1.split('2Friends')[1]}
                 </p>
                 <p className="text-base md:text-lg leading-relaxed mb-4">
-                  My inspiration comes from artists like Timbuktu and Tommy Körberg, whose artistry and storytelling have shaped my approach to music. I recently released a YouTube video highlighting my biggest musical influences.
+                  {t.about.paragraph2}
                 </p>
                 <p className="text-base md:text-lg leading-relaxed mb-6">
-                  Now I&apos;m taking the next step in my career—relocating to Stockholm to focus entirely on my own music. This is where my journey truly begins.
+                  {t.about.paragraph3}
                 </p>
                 <motion.a
                   href="https://www.youtube.com/watch?v=PiFNukCY7Pw"
@@ -233,7 +237,7 @@ export default function Home() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Watch: Ett Barn av Musik
+                  {t.about.watchButton}
                 </motion.a>
               </motion.div>
             </div>
