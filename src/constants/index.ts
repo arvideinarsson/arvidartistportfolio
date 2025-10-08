@@ -92,6 +92,10 @@ export const CONTACT_INFO = {
   tiktok: {
     url: 'https://l.instagram.com/?u=http%3A%2F%2Fwww.tiktok.com%2F%40aarvideinarsson%3Ffbclid%3DPAZXh0bgNhZW0CMTEAAafOXt6ZPvQojfDoqOxXlonSMO7e0sjqA3q-fv4WCkziJ6_qHMTu6crk1Foz0g_aem_4EhUjxpd_mkecPvNl-jOSg&e=AT2dhTBWWmUeCSyOvH-qlBA7bFI6vMbgfTt-buaWVUqc981lnYp_FyLoLbKnnTCMMsupMdAcc_HRgMcB2iNyxcOdSk4QpqgjggmruonjUw',
     handle: '@aarvideinarsson'
+  },
+  spotify: {
+    url: 'https://open.spotify.com/artist/6Tin76aSr9x0VDdpcy8Ukf',
+    handle: 'Arvid Einarsson'
   }
 };
 
