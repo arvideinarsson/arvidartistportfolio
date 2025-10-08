@@ -217,7 +217,7 @@ export default function Home() {
               >
                 <h2 className="text-4xl font-bold mb-6">I&apos;m Arvid,</h2>
                 <p className="text-lg leading-relaxed mb-4">
-                  originally from Hässleholm. Growing up, I never had a proper outlet for my energy until I discovered music in my early teenage years. Together with four friends, I formed the boyband 2Friends, and we began performing for increasingly larger audiences across Sweden. I later competed on Idol as a solo artist, advancing to the quarterfinals.
+                  originally from Hässleholm. Growing up, I never had a proper outlet for my energy until I discovered music in my early teenage years. Together with four friends, I formed the boyband <a href="https://open.spotify.com/artist/00yIymBDOwEA5ydtSLs49v" target="_blank" rel="noopener noreferrer" className="font-bold underline hover:text-gray-300 transition-colors">2Friends</a>, and we began performing for increasingly larger audiences across Sweden. I later competed on Idol as a solo artist, advancing to the quarterfinals.
                 </p>
                 <p className="text-lg leading-relaxed mb-4">
                   My inspiration comes from artists like Timbuktu and Tommy Körberg, whose artistry and storytelling have shaped my approach to music. I recently released a YouTube video highlighting my biggest musical influences.
