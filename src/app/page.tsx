@@ -185,11 +185,11 @@ export default function Home() {
 
         {/* About Arvid Section */}
         <section id="about" className="relative z-20" style={{ backgroundColor: '#1e3a5f', minHeight: '80vh', marginTop: '-30vh', paddingBottom: '0' }} aria-label="About Arvid Einarsson">
-          <div className="max-w-7xl mx-auto py-20 pl-0 pr-8">
-            <div className="grid grid-cols-12 gap-12 items-center">
-              {/* Headshot Image - Left side, spans 5 columns */}
+          <div className="max-w-7xl mx-auto py-20 px-4 md:pl-0 md:pr-8">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
+              {/* Headshot Image - Left side, spans 5 columns on desktop, full width on mobile */}
               <motion.div
-                className="col-span-5 relative w-full aspect-square"
+                className="md:col-span-5 relative w-full aspect-square"
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
@@ -209,27 +209,27 @@ export default function Home() {
 
               {/* About Text - Right Side */}
               <motion.div
-                className="col-span-7 text-white"
+                className="md:col-span-7 text-white"
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-4xl font-bold mb-6">I&apos;m Arvid,</h2>
-                <p className="text-lg leading-relaxed mb-4">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6">I&apos;m Arvid,</h2>
+                <p className="text-base md:text-lg leading-relaxed mb-4">
                   originally from Hässleholm. Growing up, I never had a proper outlet for my energy until I discovered music in my early teenage years. Together with four friends, I formed the boyband <a href="https://open.spotify.com/artist/00yIymBDOwEA5ydtSLs49v" target="_blank" rel="noopener noreferrer" className="font-bold underline hover:text-gray-300 transition-colors">2Friends</a>, and we began performing for increasingly larger audiences across Sweden. I later competed on Idol as a solo artist, advancing to the quarterfinals.
                 </p>
-                <p className="text-lg leading-relaxed mb-4">
+                <p className="text-base md:text-lg leading-relaxed mb-4">
                   My inspiration comes from artists like Timbuktu and Tommy Körberg, whose artistry and storytelling have shaped my approach to music. I recently released a YouTube video highlighting my biggest musical influences.
                 </p>
-                <p className="text-lg leading-relaxed mb-6">
+                <p className="text-base md:text-lg leading-relaxed mb-6">
                   Now I&apos;m taking the next step in my career—relocating to Stockholm to focus entirely on my own music. This is where my journey truly begins.
                 </p>
                 <motion.a
                   href="https://www.youtube.com/watch?v=PiFNukCY7Pw"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block px-8 py-3 bg-white text-gray-900 rounded-full font-medium hover:bg-gray-100 transition-colors duration-200"
+                  className="inline-block px-6 md:px-8 py-3 bg-white text-gray-900 rounded-full font-medium hover:bg-gray-100 transition-colors duration-200 text-sm md:text-base"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >

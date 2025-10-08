@@ -74,7 +74,7 @@ export default function Hero() {
               scale={false}
               textColor="#FFFFFF"
               strokeColor="#27D3F5"
-              minFontSize={150}
+              minFontSize={48}
               className="font-bold tracking-tight"
             />
           </div>

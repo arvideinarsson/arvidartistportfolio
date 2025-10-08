@@ -91,11 +91,11 @@ export default function Contact({ className }: ContactProps) {
   ];
 
   return (
-    <div className={cn('text-white py-20', className)}>
+    <div className={cn('text-white py-12 md:py-20', className)}>
       <div className="w-full max-w-4xl mx-auto px-4">
         {/* Heading */}
         <motion.h2
-          className="text-5xl font-bold text-white mb-12 text-center"
+          className="text-3xl md:text-5xl font-bold text-white mb-8 md:mb-12 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -115,9 +115,9 @@ export default function Contact({ className }: ContactProps) {
           }}
           viewport={{ once: true }}
         >
-          <form onSubmit={handleSubmit} className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
             <div>
-              <label htmlFor="email" className="block text-lg font-medium text-gray-900 mb-3">
+              <label htmlFor="email" className="block text-base md:text-lg font-medium text-gray-900 mb-2 md:mb-3">
                 Email Address
               </label>
               <input
@@ -126,22 +126,22 @@ export default function Contact({ className }: ContactProps) {
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-6 py-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all text-lg"
+                className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all text-base md:text-lg"
                 placeholder="your@email.com"
               />
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-lg font-medium text-gray-900 mb-3">
+              <label htmlFor="message" className="block text-base md:text-lg font-medium text-gray-900 mb-2 md:mb-3">
                 Message
               </label>
               <textarea
                 id="message"
                 required
-                rows={8}
+                rows={6}
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className="w-full px-6 py-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all resize-none text-lg"
+                className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all resize-none text-base md:text-lg"
                 placeholder="Your message..."
               />
             </div>
@@ -150,7 +150,7 @@ export default function Contact({ className }: ContactProps) {
               type="submit"
               disabled={status === 'sending' || status === 'sent'}
               className={cn(
-                'w-full px-10 py-5 rounded-full font-medium transition-colors duration-200 text-lg',
+                'w-full px-8 md:px-10 py-4 md:py-5 rounded-full font-medium transition-colors duration-200 text-base md:text-lg',
                 status === 'sent'
                   ? 'bg-green-600 text-white'
                   : 'bg-gray-900 text-white hover:bg-gray-800'
@@ -168,7 +168,7 @@ export default function Contact({ className }: ContactProps) {
 
         {/* Social Icons at Bottom */}
         <motion.div
-          className="mt-16 flex justify-center gap-12"
+          className="mt-12 md:mt-16 flex justify-center gap-8 md:gap-12 flex-wrap"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
