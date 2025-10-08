@@ -109,15 +109,15 @@ export default function Navigation({ className, concerts, isLoading }: Navigatio
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.3 }}
       >
-        <div className="w-full py-1">
+        <div className="w-full py-0.5 md:py-1">
           {/* Clean scrolling carousel container - full width */}
           <div className="w-full overflow-hidden">
-            <div className="animate-scroll flex items-center whitespace-nowrap" style={{ gap: '4rem' }}>
+            <div className="animate-scroll flex items-center whitespace-nowrap" style={{ gap: 'clamp(1.5rem, 3vw, 4rem)' }}>
               {/* Concert titles scrolling */}
               {isLoading ? (
-                <div className="flex gap-8">
-                  <div className="h-6 w-40 bg-white/20 rounded animate-pulse"></div>
-                  <div className="h-6 w-32 bg-white/20 rounded animate-pulse"></div>
+                <div className="flex gap-4 md:gap-8">
+                  <div className="h-4 md:h-6 w-32 md:w-40 bg-white/20 rounded animate-pulse"></div>
+                  <div className="h-4 md:h-6 w-24 md:w-32 bg-white/20 rounded animate-pulse"></div>
                 </div>
               ) : concerts.length > 0 ? (
                 (() => {
@@ -153,7 +153,7 @@ export default function Navigation({ className, concerts, isLoading }: Navigatio
                               href={concert.ticketUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-white hover:text-orange-300 transition-colors duration-200 text-lg font-medium cursor-pointer"
+                              className="text-white hover:text-orange-300 transition-colors duration-200 text-sm md:text-lg font-medium cursor-pointer"
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
                             >
@@ -162,14 +162,14 @@ export default function Navigation({ className, concerts, isLoading }: Navigatio
                           ) : (
                             <motion.span
                               key={`${concert.id}-${setIndex + 1}-${concertIndex}`}
-                              className="text-white/90 text-lg font-medium"
+                              className="text-white/90 text-sm md:text-lg font-medium"
                             >
                               {formatDate(concert.date)} - {concert.title}
                             </motion.span>
                           ),
                           <div
                             key={`dot-${concert.id}-${setIndex + 1}-${concertIndex}`}
-                            className="w-2 h-2 bg-blue-400 rounded-full flex-shrink-0"
+                            className="w-1.5 h-1.5 md:w-2 md:h-2 bg-blue-400 rounded-full flex-shrink-0"
                           ></div>
                         ])
                       ).flat()}
@@ -185,15 +185,15 @@ export default function Navigation({ className, concerts, isLoading }: Navigatio
                       href="https://www.youtube.com/watch?v=xvFZjo5PgG0"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-white/90 hover:text-orange-300 transition-colors duration-200 text-lg font-medium cursor-pointer"
+                      className="text-white/90 hover:text-orange-300 transition-colors duration-200 text-sm md:text-lg font-medium cursor-pointer"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
                       Stay Tuned
                     </motion.a>,
-                    <div key={`dot1-${index}`} className="w-2 h-2 bg-blue-400 rounded-full flex-shrink-0"></div>,
-                    <span key={`coming-soon-${index}`} className="text-white/90 text-lg font-medium">Concerts Coming Soon</span>,
-                    <div key={`dot2-${index}`} className="w-2 h-2 bg-blue-400 rounded-full flex-shrink-0"></div>
+                    <div key={`dot1-${index}`} className="w-1.5 h-1.5 md:w-2 md:h-2 bg-blue-400 rounded-full flex-shrink-0"></div>,
+                    <span key={`coming-soon-${index}`} className="text-white/90 text-sm md:text-lg font-medium">Concerts Coming Soon</span>,
+                    <div key={`dot2-${index}`} className="w-1.5 h-1.5 md:w-2 md:h-2 bg-blue-400 rounded-full flex-shrink-0"></div>
                   ]).flat()}
                 </>
               )}
