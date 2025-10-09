@@ -96,7 +96,6 @@ export async function GET() {
   try {
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_API_KEY;
     const calendarId = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_ID;
-    const tagFilter = process.env.NEXT_PUBLIC_CONCERT_TAG_FILTER || '[CONCERT]';
 
     if (!apiKey || !calendarId) {
       return NextResponse.json(
