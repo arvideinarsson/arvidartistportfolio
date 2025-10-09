@@ -1,11 +1,11 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useState, useEffect, useCallback } from 'react';
-
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import Link from 'next/link';
 import { NavigationProps } from '@/types';
-import { NAV_ITEMS, ANIMATION_CONFIG } from '@/constants';
-import { scrollToSection, debounce, cn } from '@/utils';
+import { NAV_ITEMS } from '@/constants';
+import { scrollToSection, formatDate } from '@/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Concert {
@@ -30,79 +30,227 @@ interface NavigationWithConcertsProps extends NavigationProps {
   source: 'google-calendar' | 'cached' | 'fallback';
 }
 
-export default function Navigation({ className, concerts, isLoading }: NavigationWithConcertsProps) {
-  const { t } = useLanguage();
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
+export default function Navigation({ concerts, isLoading }: NavigationWithConcertsProps) {
+  const { t, language, setLanguage } = useLanguage();
+  const [isOpen, setIsOpen] = useState(false);
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'subscribing' | 'subscribed' | 'error'>('idle');
 
-  // Debounced scroll handler for better performance
-  const handleScroll = useCallback(() => {
-    const debouncedFn = debounce(() => {
-      setIsCollapsed(window.scrollY > 100);
-    }, 10);
-    return debouncedFn();
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
-
-  const handleNavClick = useCallback((href: string) => {
+  const handleNavClick = (href: string, e?: React.MouseEvent) => {
+    // If it's a page route (starts with /), don't prevent default - let Link handle it
+    if (href.startsWith('/')) {
+      setIsOpen(false);
+      return;
+    }
+    // Otherwise, scroll to section
     scrollToSection(href);
-  }, []);
+    setIsOpen(false);
+  };
 
-  // Determine if nav should show expanded (either not collapsed or being hovered)
-  const showExpanded = !isCollapsed || isHovered;
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setNewsletterStatus('subscribing');
 
+    try {
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: newsletterEmail }),
+      });
+
+      if (response.ok) {
+        setNewsletterStatus('subscribed');
+        setNewsletterEmail('');
+        setTimeout(() => setNewsletterStatus('idle'), 3000);
+      } else {
+        setNewsletterStatus('error');
+        setTimeout(() => setNewsletterStatus('idle'), 3000);
+      }
+    } catch (error) {
+      console.error('Error subscribing to newsletter:', error);
+      setNewsletterStatus('error');
+      setTimeout(() => setNewsletterStatus('idle'), 3000);
+    }
+  };
 
   return (
     <>
-      {/* Main Navigation - Hidden */}
-      <motion.nav
-        className={cn('fixed left-8 top-12 z-[60] flex flex-col hidden', isCollapsed ? 'p-12' : '', className)}
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{
-          duration: ANIMATION_CONFIG.defaultDuration,
-          ease: ANIMATION_CONFIG.defaultEase
-        }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        role="navigation"
-        aria-label="Main navigation"
+      {/* Hamburger Menu Button */}
+      <motion.button
+        className="fixed top-8 left-4 sm:top-11 sm:left-8 z-[70] flex flex-col gap-1.5 p-2"
+        onClick={() => setIsOpen(!isOpen)}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        aria-label="Toggle menu"
       >
-        <div className={cn(
-          'flex flex-col transition-all duration-500',
-          'gap-3'
-        )}>
-          {NAV_ITEMS.map((item) => (
-            <motion.button
-              key={item.href}
-              onClick={() => handleNavClick(item.href)}
-              className={cn(
-                item.color,
-                'transition-all duration-500 font-semibold text-sm lowercase tracking-wide',
-                'hover:translate-x-2 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-white/50',
-                'rounded-full',
-                showExpanded
-                  ? 'px-8 py-1 text-white min-w-[100px] h-6'
-                  : 'w-6 h-6 text-[0px] min-w-0'
-              )}
-              whileHover={{
-                scale: showExpanded ? 1.05 : 1.2,
-                transition: { duration: 0.2 }
-              }}
-              whileTap={{ scale: 0.95 }}
-              aria-label={`Navigate to ${item.label} section`}
+        <motion.div
+          className="w-6 h-0.5 sm:w-8 bg-white shadow-lg"
+          animate={isOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
+          transition={{ duration: 0.3 }}
+        />
+        <motion.div
+          className="w-6 h-0.5 sm:w-8 bg-white shadow-lg"
+          animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        />
+        <motion.div
+          className="w-6 h-0.5 sm:w-8 bg-white shadow-lg"
+          animate={isOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
+          transition={{ duration: 0.3 }}
+        />
+      </motion.button>
+
+      {/* Sidebar Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              className="fixed inset-0 bg-black/50 z-[65]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+            />
+
+            {/* Sidebar */}
+            <motion.div
+              className="fixed top-0 left-0 h-full w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-2/5 max-w-md bg-gray-900 z-[66] flex flex-col overflow-hidden"
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             >
-              <span className={cn(!showExpanded && 'sr-only')}>
-                {t.nav[item.label as keyof typeof t.nav]}
-              </span>
-            </motion.button>
-          ))}
-        </div>
-      </motion.nav>
+              <div className="flex-1 overflow-y-auto overscroll-contain p-6 sm:p-8 md:p-12">
+                {/* Scrollable Content Wrapper */}
+              {/* Top Section - Navigation and Concert Card */}
+              <div className="flex-1 flex flex-col justify-between pt-12 sm:pt-8 pb-4 sm:pb-8 gap-6 sm:gap-8">
+                {/* Navigation Items */}
+                <div className="flex flex-col gap-4 sm:gap-6">
+                  {NAV_ITEMS.map((item, index) => {
+                    const isPageRoute = item.href.startsWith('/');
+                    const Component = isPageRoute ? Link : 'button';
+
+                    return (
+                      <motion.div
+                        key={item.href}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <Component
+                          href={isPageRoute ? item.href : undefined}
+                          onClick={isPageRoute ? () => setIsOpen(false) : () => handleNavClick(item.href)}
+                          className="text-white text-3xl sm:text-4xl md:text-5xl font-bold text-left hover:text-gray-300 transition-colors uppercase block"
+                        >
+                          {t.nav[item.label as keyof typeof t.nav]}
+                        </Component>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+
+                {/* Upcoming Concert Card */}
+                {concerts.length > 0 && (
+                  <motion.div
+                    className="p-4 sm:p-6 bg-white/10 rounded-lg border border-white/20"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    <p className="text-white/60 text-xs uppercase tracking-wider mb-2">Upcoming Concert</p>
+                    <h3 className="text-white text-lg sm:text-xl font-bold mb-1">{concerts[0].title}</h3>
+                    <p className="text-white/80 text-sm">{concerts[0].venue}</p>
+                    <p className="text-white/60 text-xs sm:text-sm mt-1">{formatDate(concerts[0].date)} • {concerts[0].time}</p>
+                    {concerts[0].ticketUrl && (
+                      <a
+                        href={concerts[0].ticketUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block mt-3 sm:mt-4 px-4 py-2 bg-white text-gray-900 rounded-full text-xs sm:text-sm font-semibold hover:bg-gray-200 transition-colors"
+                      >
+                        Get Tickets
+                      </a>
+                    )}
+                  </motion.div>
+                )}
+              </div>
+
+              {/* Newsletter and Language Section - Fixed at bottom */}
+              <motion.div
+                className="pt-4 sm:pt-6 md:pt-8 border-t border-white/20"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+              >
+                {/* Newsletter Signup */}
+                <div className="mb-4 sm:mb-6 pb-4 sm:pb-6 border-b border-white/20">
+                  <p className="text-white/60 text-xs sm:text-sm mb-2 sm:mb-3">{t.contact.newsletter.heading}</p>
+                  <form onSubmit={handleNewsletterSubmit} className="flex flex-col gap-2">
+                    <input
+                      type="email"
+                      required
+                      value={newsletterEmail}
+                      onChange={(e) => setNewsletterEmail(e.target.value)}
+                      className="w-full px-3 py-2 bg-white/10 text-white border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all text-xs sm:text-sm placeholder-white/40"
+                      placeholder={t.contact.newsletter.placeholder}
+                    />
+                    <motion.button
+                      type="submit"
+                      disabled={newsletterStatus === 'subscribing' || newsletterStatus === 'subscribed'}
+                      className={`w-full px-4 py-2 rounded-lg font-medium transition-colors duration-200 text-xs sm:text-sm ${
+                        newsletterStatus === 'subscribed'
+                          ? 'bg-green-600 text-white'
+                          : 'bg-white text-gray-900 hover:bg-gray-100'
+                      }`}
+                      whileHover={{ scale: newsletterStatus === 'idle' ? 1.02 : 1 }}
+                      whileTap={{ scale: newsletterStatus === 'idle' ? 0.98 : 1 }}
+                    >
+                      {newsletterStatus === 'idle' && t.contact.newsletter.subscribe}
+                      {newsletterStatus === 'subscribing' && t.contact.newsletter.subscribing}
+                      {newsletterStatus === 'subscribed' && t.contact.newsletter.subscribed}
+                      {newsletterStatus === 'error' && t.contact.newsletter.error}
+                    </motion.button>
+                  </form>
+                </div>
+
+                <p className="text-white/60 text-xs sm:text-sm mb-3 sm:mb-4">Language</p>
+                <div className="flex gap-3 sm:gap-4 mb-4 sm:mb-6">
+                  <button
+                    onClick={() => setLanguage('en')}
+                    className={`text-base sm:text-lg font-semibold transition-colors ${
+                      language === 'en' ? 'text-white' : 'text-white/40 hover:text-white/60'
+                    }`}
+                  >
+                    EN
+                  </button>
+                  <span className="text-white/20">|</span>
+                  <button
+                    onClick={() => setLanguage('sv')}
+                    className={`text-base sm:text-lg font-semibold transition-colors ${
+                      language === 'sv' ? 'text-white' : 'text-white/40 hover:text-white/60'
+                    }`}
+                  >
+                    SV
+                  </button>
+                </div>
+
+                {/* Developer Credit */}
+                <a
+                  href="mailto:malte.binz@gmail.com"
+                  className="block text-white/40 text-[10px] sm:text-xs hover:text-white/60 transition-colors underline"
+                >
+                  A website by Malte Binz
+                </a>
+              </motion.div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Upcoming Concerts Bar */}
       <motion.div
@@ -112,10 +260,8 @@ export default function Navigation({ className, concerts, isLoading }: Navigatio
         transition={{ duration: 0.8, delay: 0.3 }}
       >
         <div className="w-full py-0.5 md:py-1">
-          {/* Clean scrolling carousel container - full width */}
           <div className="w-full overflow-hidden">
             <div className="animate-scroll flex items-center whitespace-nowrap" style={{ gap: 'clamp(1.5rem, 3vw, 4rem)' }}>
-              {/* Concert titles scrolling */}
               {isLoading ? (
                 <div className="flex gap-4 md:gap-8">
                   <div className="h-4 md:h-6 w-32 md:w-40 bg-white/20 rounded animate-pulse"></div>
@@ -123,30 +269,18 @@ export default function Navigation({ className, concerts, isLoading }: Navigatio
                 </div>
               ) : concerts.length > 0 ? (
                 (() => {
-                  // Adaptive repetition system
-                  const displayConcerts = concerts.slice(0, 3); // Max 3 unique titles
-
-                  // Calculate repetition count based on number of concerts
+                  const displayConcerts = concerts.slice(0, 3);
                   let repetitionCount;
                   if (displayConcerts.length === 1) {
-                    repetitionCount = 12; // Single title needs many repetitions to fill space
+                    repetitionCount = 12;
                   } else if (displayConcerts.length === 2) {
-                    repetitionCount = 8;  // Two titles need moderate repetitions
+                    repetitionCount = 8;
                   } else {
-                    repetitionCount = 5;  // Three+ titles use fewer repetitions
+                    repetitionCount = 5;
                   }
-
-                  // Helper function to format date as "MM/DD"
-                  const formatDate = (dateStr: string) => {
-                    const date = new Date(dateStr);
-                    const month = date.getMonth() + 1;
-                    const day = date.getDate();
-                    return `${month}/${day}`;
-                  };
 
                   return (
                     <>
-                      {/* Create adaptive flat array with dots between titles */}
                       {Array.from({ length: repetitionCount }, (_, setIndex) =>
                         displayConcerts.flatMap((concert, concertIndex) => [
                           concert.ticketUrl ? (
@@ -179,7 +313,6 @@ export default function Navigation({ className, concerts, isLoading }: Navigatio
                   );
                 })()
               ) : (
-                // Fallback when no upcoming concerts
                 <>
                   {Array.from({ length: 8 }, (_, index) => [
                     <motion.a

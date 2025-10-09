@@ -103,3 +103,12 @@ Always follow the established folder structure patterns.
 - No commented-out code in production
 - Keep components focused and single-purpose
 - Extract reusable logic into hooks or utilities
+
+## Rule #19: Claude.md
+- Always follow and reguraily check Claude.md 
+
+## Rule #20: 
+- all of the website projects are set in Desktop -> Website Projects
+- in this folders you will find rules, routines, guides and all other client websites
+- for each session you have to ask WHOS website we are working on
+- But you still need access to the remainding folders and files

@@ -45,6 +45,15 @@ export interface Translations {
     sent: string;
     error: string;
     copyright: string;
+    newsletter: {
+      heading: string;
+      description: string;
+      placeholder: string;
+      subscribe: string;
+      subscribing: string;
+      subscribed: string;
+      error: string;
+    };
   };
 }
 
@@ -94,6 +103,15 @@ export const translations: Record<Language, Translations> = {
       sent: 'Message Sent!',
       error: 'Try Again',
       copyright: 'All rights reserved.',
+      newsletter: {
+        heading: 'Want to get pinged?',
+        description: 'Subscribe to get notified about new concerts and releases',
+        placeholder: 'Your email',
+        subscribe: 'Never miss a concert',
+        subscribing: 'Subscribing...',
+        subscribed: 'Subscribed!',
+        error: 'Try Again',
+      },
     },
   },
   sv: {
@@ -141,6 +159,15 @@ export const translations: Record<Language, Translations> = {
       sent: 'Meddelande Skickat!',
       error: 'Försök Igen',
       copyright: 'Alla rättigheter förbehållna.',
+      newsletter: {
+        heading: 'Vill du bli pingad?',
+        description: 'Prenumerera för att få notiser om nya konserter och släpp',
+        placeholder: 'Din e-post',
+        subscribe: 'Missa aldrig en konsert',
+        subscribing: 'Prenumererar...',
+        subscribed: 'Prenumererad!',
+        error: 'Försök Igen',
+      },
     },
   },
 };

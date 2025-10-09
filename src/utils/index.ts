@@ -21,43 +21,11 @@ export function scrollToSection(sectionId: string): void {
 }
 
 /**
- * Check if an element is in viewport
+ * Format date as "MM/DD"
  */
-export function isInViewport(element: Element): boolean {
-  const rect = element.getBoundingClientRect();
-  return (
-    rect.top >= 0 &&
-    rect.left >= 0 &&
-    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-  );
-}
-
-/**
- * Debounce function for performance optimization
- */
-export function debounce<T extends (...args: unknown[]) => void>(
-  func: T,
-  wait: number
-): (...args: Parameters<T>) => void {
-  let timeout: NodeJS.Timeout;
-  return (...args: Parameters<T>) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), wait);
-  };
-}
-
-/**
- * Format image path for Next.js optimization
- */
-export function formatImagePath(src: string): string {
-  // Ensure the path starts with / for Next.js static assets
-  return src.startsWith('/') ? src : `/${src}`;
-}
-
-/**
- * Get responsive image sizes string for Next.js Image component
- */
-export function getImageSizes(maxWidth: number = 800): string {
-  return `(max-width: 768px) 100vw, (max-width: 1200px) 50vw, ${maxWidth}px`;
+export function formatDate(dateStr: string): string {
+  const date = new Date(dateStr);
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${month}/${day}`;
 }

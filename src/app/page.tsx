@@ -11,7 +11,6 @@ import About from '@/components/About';
 import Contact from '@/components/Contact';
 import ClickSpark from '@/components/ClickSpark';
 import ParallaxSection from '@/components/ParallaxSection';
-import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { useConcerts } from '@/hooks/useConcerts';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -90,7 +89,6 @@ export default function Home() {
       extraScale={1.2}
     >
       <main className="overflow-x-hidden">
-        <LanguageSwitcher />
         <Navigation
           concerts={concerts}
           isLoading={isLoading}

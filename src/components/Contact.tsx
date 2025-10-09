@@ -215,16 +215,16 @@ export default function Contact({ className }: ContactProps) {
         </motion.p>
 
         {/* Developer Credit */}
-        <motion.div
-          className="text-white text-xs mt-4 text-center"
+        <motion.a
+          href="mailto:malte.binz@gmail.com"
+          className="block text-white text-xs mt-4 text-center hover:text-gray-300 transition-colors underline"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.9 }}
           viewport={{ once: true }}
         >
-          <p>A website by Malte Binz</p>
-          <p className="mt-1">malte.binz@gmail.com</p>
-        </motion.div>
+          A website by Malte Binz
+        </motion.a>
       </div>
     </div>
   );
