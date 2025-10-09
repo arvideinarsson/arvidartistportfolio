@@ -36,7 +36,7 @@ export default function Navigation({ concerts, isLoading }: NavigationWithConcer
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'subscribing' | 'subscribed' | 'error'>('idle');
 
-  const handleNavClick = (href: string, e?: React.MouseEvent) => {
+  const handleNavClick = (href: string) => {
     // If it's a page route (starts with /), don't prevent default - let Link handle it
     if (href.startsWith('/')) {
       setIsOpen(false);
@@ -132,7 +132,6 @@ export default function Navigation({ concerts, isLoading }: NavigationWithConcer
                 <div className="flex flex-col gap-4 sm:gap-6">
                   {NAV_ITEMS.map((item, index) => {
                     const isPageRoute = item.href.startsWith('/');
-                    const Component = isPageRoute ? Link : 'button';
 
                     return (
                       <motion.div
@@ -141,13 +140,22 @@ export default function Navigation({ concerts, isLoading }: NavigationWithConcer
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.1 }}
                       >
-                        <Component
-                          href={isPageRoute ? item.href : undefined}
-                          onClick={isPageRoute ? () => setIsOpen(false) : () => handleNavClick(item.href)}
-                          className="text-white text-3xl sm:text-4xl md:text-5xl font-bold text-left hover:text-gray-300 transition-colors uppercase block"
-                        >
-                          {t.nav[item.label as keyof typeof t.nav]}
-                        </Component>
+                        {isPageRoute ? (
+                          <Link
+                            href={item.href}
+                            onClick={() => setIsOpen(false)}
+                            className="text-white text-3xl sm:text-4xl md:text-5xl font-bold text-left hover:text-gray-300 transition-colors uppercase block"
+                          >
+                            {t.nav[item.label as keyof typeof t.nav]}
+                          </Link>
+                        ) : (
+                          <button
+                            onClick={() => handleNavClick(item.href)}
+                            className="text-white text-3xl sm:text-4xl md:text-5xl font-bold text-left hover:text-gray-300 transition-colors uppercase block"
+                          >
+                            {t.nav[item.label as keyof typeof t.nav]}
+                          </button>
+                        )}
                       </motion.div>
                     );
                   })}
