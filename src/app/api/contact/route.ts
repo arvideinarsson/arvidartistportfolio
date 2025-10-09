@@ -5,12 +5,12 @@ export async function POST(request: Request) {
   // Initialize Resend inside the function to avoid build-time errors
   const resend = new Resend(process.env.RESEND_API_KEY || '');
   try {
-    const { email, message } = await request.json();
+    const { email, subject, message } = await request.json();
 
     // Validate input
-    if (!email || !message) {
+    if (!email || !subject || !message) {
       return NextResponse.json(
-        { error: 'Email and message are required' },
+        { error: 'Email, subject, and message are required' },
         { status: 400 }
       );
     }
@@ -20,8 +20,8 @@ export async function POST(request: Request) {
       from: 'Portfolio Contact <onboarding@resend.dev>',
       to: process.env.CONTACT_EMAIL || 'arvideinarssonartist@gmail.com',
       replyTo: email,
-      subject: `New Contact Form Message from ${email}`,
-      text: `New Contact Form Submission\n\nFrom: ${email}\n\nMessage:\n${message}`,
+      subject: subject,
+      text: `New Contact Form Submission\n\nFrom: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`,
     });
 
     return NextResponse.json({ success: true, data });

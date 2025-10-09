@@ -12,6 +12,7 @@ export default function Contact({ className }: ContactProps) {
   const { t } = useLanguage();
   const [formData, setFormData] = useState({
     email: '',
+    subject: '',
     message: ''
   });
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
@@ -31,7 +32,7 @@ export default function Contact({ className }: ContactProps) {
 
       if (response.ok) {
         setStatus('sent');
-        setFormData({ email: '', message: '' });
+        setFormData({ email: '', subject: '', message: '' });
         setTimeout(() => setStatus('idle'), 3000);
       } else {
         setStatus('error');
@@ -119,32 +120,38 @@ export default function Contact({ className }: ContactProps) {
         >
           <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
             <div>
-              <label htmlFor="email" className="block text-base md:text-lg font-medium text-gray-900 mb-2 md:mb-3">
-                {t.contact.email}
-              </label>
               <input
                 type="email"
                 id="email"
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all text-base md:text-lg"
-                placeholder="your@email.com"
+                className="w-full px-4 md:px-6 py-3 md:py-4 bg-white text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all text-base md:text-lg"
+                placeholder="Your email"
               />
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-base md:text-lg font-medium text-gray-900 mb-2 md:mb-3">
-                {t.contact.message}
-              </label>
+              <input
+                type="text"
+                id="subject"
+                required
+                value={formData.subject}
+                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                className="w-full px-4 md:px-6 py-3 md:py-4 bg-white text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all text-base md:text-lg"
+                placeholder="Subject"
+              />
+            </div>
+
+            <div>
               <textarea
                 id="message"
                 required
                 rows={6}
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className="w-full px-4 md:px-6 py-3 md:py-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all resize-none text-base md:text-lg"
-                placeholder={t.contact.message}
+                className="w-full px-4 md:px-6 py-3 md:py-4 bg-white text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all resize-none text-base md:text-lg"
+                placeholder="Your message"
               />
             </div>
 
@@ -182,7 +189,7 @@ export default function Contact({ className }: ContactProps) {
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-900 hover:text-gray-600 transition-colors"
+              className="text-white hover:text-gray-300 transition-colors"
               whileHover={{ scale: 1.15 }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: 20 }}
@@ -198,7 +205,7 @@ export default function Contact({ className }: ContactProps) {
 
         {/* Copyright */}
         <motion.p
-          className="text-gray-500 text-sm mt-12 text-center tracking-wider"
+          className="text-white text-sm mt-12 text-center tracking-wider"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.8 }}
@@ -206,6 +213,18 @@ export default function Contact({ className }: ContactProps) {
         >
           © {new Date().getFullYear()} Arvid Einarsson. {t.contact.copyright}
         </motion.p>
+
+        {/* Developer Credit */}
+        <motion.div
+          className="text-white text-xs mt-4 text-center"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.9 }}
+          viewport={{ once: true }}
+        >
+          <p>A website by Malte Binz</p>
+          <p className="mt-1">malte.binz@gmail.com</p>
+        </motion.div>
       </div>
     </div>
   );
