@@ -33,6 +33,7 @@ interface NavigationWithConcertsProps extends NavigationProps {
 export default function Navigation({ concerts, isLoading }: NavigationWithConcertsProps) {
   const { t, language, setLanguage } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
+  const [newsletterName, setNewsletterName] = useState('');
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'subscribing' | 'subscribed' | 'error'>('idle');
 
@@ -57,11 +58,12 @@ export default function Navigation({ concerts, isLoading }: NavigationWithConcer
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: newsletterEmail }),
+        body: JSON.stringify({ email: newsletterEmail, name: newsletterName }),
       });
 
       if (response.ok) {
         setNewsletterStatus('subscribed');
+        setNewsletterName('');
         setNewsletterEmail('');
         setTimeout(() => setNewsletterStatus('idle'), 3000);
       } else {
@@ -198,6 +200,14 @@ export default function Navigation({ concerts, isLoading }: NavigationWithConcer
                 <div className="mb-4 sm:mb-6 pb-4 sm:pb-6 border-b border-white/20">
                   <p className="text-white/60 text-xs sm:text-sm mb-2 sm:mb-3">{t.contact.newsletter.heading}</p>
                   <form onSubmit={handleNewsletterSubmit} className="flex flex-col gap-2">
+                    <input
+                      type="text"
+                      required
+                      value={newsletterName}
+                      onChange={(e) => setNewsletterName(e.target.value)}
+                      className="w-full px-3 py-2 bg-white/10 text-white border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all text-xs sm:text-sm placeholder-white/40"
+                      placeholder="Your name"
+                    />
                     <input
                       type="email"
                       required
