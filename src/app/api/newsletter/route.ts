@@ -40,12 +40,25 @@ export async function POST(request: Request) {
       if (spreadsheetId) {
         const timestamp = new Date().toISOString();
 
-        // Load service account credentials
-        const credentialsPath = path.join(process.cwd(), 'google-credentials.json');
-        const auth = new google.auth.GoogleAuth({
-          keyFile: credentialsPath,
-          scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-        });
+        // Load service account credentials from environment variable or file
+        let auth;
+        const serviceAccountJson = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
+
+        if (serviceAccountJson) {
+          // Production: use environment variable
+          const credentials = JSON.parse(serviceAccountJson);
+          auth = new google.auth.GoogleAuth({
+            credentials,
+            scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+          });
+        } else {
+          // Development: use local file
+          const credentialsPath = path.join(process.cwd(), 'google-credentials.json');
+          auth = new google.auth.GoogleAuth({
+            keyFile: credentialsPath,
+            scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+          });
+        }
 
         const sheets = google.sheets({ version: 'v4', auth });
 
